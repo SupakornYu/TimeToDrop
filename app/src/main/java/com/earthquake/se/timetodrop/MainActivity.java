@@ -16,8 +16,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btn1 = (Button) findViewById(R.id.button1);
-        btn1.setOnClickListener(this);
+        Button btn2 = (Button) findViewById(R.id.button1);
+        btn2.setOnClickListener(this);
     }
 
 
