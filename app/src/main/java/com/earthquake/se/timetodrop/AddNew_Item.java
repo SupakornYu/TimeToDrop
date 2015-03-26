@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Camera;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
@@ -18,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 
@@ -108,6 +106,7 @@ public class AddNew_Item extends ActionBarActivity implements View.OnClickListen
                 //Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 //startActivityForResult(intent, CAMERA_ACTIVITY_REQ);
                 break;
+
             case R.id.saveBtn:
                 String foodName = editFoodName.getText().toString();
                 if(foodName.length() != 0) {
@@ -139,7 +138,6 @@ public class AddNew_Item extends ActionBarActivity implements View.OnClickListen
             } else if (resultCode == RESULT_OK && requestCode == GALLERY_REQ) {
                 Uri uripath = imageReturnedIntent.getData();
                 String[] arrFilePath = {MediaStore.Images.Media.DATA};
-
                 Cursor cursor = getContentResolver().query(uripath,arrFilePath,null,null,null);
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(arrFilePath[0]);
