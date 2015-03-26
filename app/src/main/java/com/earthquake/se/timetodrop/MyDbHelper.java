@@ -1,4 +1,5 @@
 package com.earthquake.se.timetodrop;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -7,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by imuntol on 24/3/2558.
  */
 public class MyDbHelper extends SQLiteOpenHelper {
+
         private static final String DB_NAME = "BTS";
         private static final int DB_VERSION = 1;
 
@@ -58,6 +60,9 @@ public class MyDbHelper extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME3);
             onCreate(db);
         }
+
+
+
 
     }
 

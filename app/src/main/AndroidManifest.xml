@@ -27,6 +27,10 @@
             android:name=".AddNew_Item"
             android:label="@string/title_activity_add_new__item" >
         </activity>
+        <activity
+            android:name=".ViewDB"
+            android:label="@string/title_activity_view_db" >
+        </activity>
     </application>
 
 </manifest>

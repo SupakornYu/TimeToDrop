@@ -1,5 +1,6 @@
 package com.earthquake.se.timetodrop;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
@@ -13,16 +14,25 @@ import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
-    SQLiteDatabase mDb;
-    MyDbHelper mHelper;
-    Cursor mCursor;
+
+    private Button CreateButton ;
+    private Button btn1;
+    private Button viewDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button btn2 = (Button) findViewById(R.id.button1);
-        btn2.setOnClickListener(this);
+        initialWidget();
+        btn1.setOnClickListener(this);
+        CreateButton.setOnClickListener(this);
+        viewDB.setOnClickListener(this);
+    }
+
+    private void initialWidget() {
+        btn1 = (Button) findViewById(R.id.button1);
+        CreateButton = (Button) findViewById(R.id.NewItem);
+        viewDB =  (Button) findViewById(R.id.viewbtn);
     }
 
 
@@ -49,8 +59,24 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     public void onClick(View v){
-        
-        Toast.makeText(MainActivity.this,"Hello World",Toast.LENGTH_LONG).show();
+
+
+        switch (v.getId()) {
+            case R.id.button1:
+                Toast.makeText(MainActivity.this,"Hello World",Toast.LENGTH_LONG).show();
+                break;
+            case R.id.NewItem:
+                Intent i = new Intent(getApplicationContext(), AddNew_Item.class);
+                startActivity(i);
+                break;
+            case R.id.viewbtn:
+                Intent j = new Intent(getApplicationContext(), ViewDB.class);
+                startActivity(j);
+                break;
+        }
+
+
+
 
 
     }
