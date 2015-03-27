@@ -146,7 +146,7 @@ public class AddNew_Item extends ActionBarActivity implements View.OnClickListen
                 ImageView img = (ImageView) findViewById(R.id.imageView);
                 img.setImageBitmap(photo);
                 savePic(photo);
-             
+
              } else if (resultCode == RESULT_OK && requestCode == GALLERY_REQ) {
                 Uri uripath = imageReturnedIntent.getData();
                 String[] arrFilePath = {MediaStore.Images.Media.DATA};
@@ -158,6 +158,7 @@ public class AddNew_Item extends ActionBarActivity implements View.OnClickListen
                 ImageView img = (ImageView) findViewById(R.id.imageView);
                 photo =  BitmapFactory.decodeFile(strPath);
                 img.setImageBitmap(photo);
+                savePic(photo);
 
                 //  Toast.makeText(AddNew_Item.this,strPath.toString(),Toast.LENGTH_LONG).show();
             }
