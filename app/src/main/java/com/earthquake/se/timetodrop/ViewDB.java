@@ -5,23 +5,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class ViewDB extends ActionBarActivity {
-    MyDbHelper mHelper;
+    FoodDb mHelper;
     SQLiteDatabase mDb;
     Cursor mCursor;
     ListView listFood;
@@ -29,10 +19,10 @@ public class ViewDB extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_db);
-        mHelper = new MyDbHelper(this);
+        mHelper = new FoodDb(this);
         mDb = mHelper.getReadableDatabase();
 
-        mCursor = mDb.rawQuery("SELECT * FROM " + MyDbHelper.TABLE_NAME2, null);
+        mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2, null);
         ArrayList<String> arr_list = new ArrayList<String>();
         mCursor.moveToFirst();
         while(!mCursor.isAfterLast() ){
@@ -42,6 +32,7 @@ public class ViewDB extends ActionBarActivity {
         ArrayAdapter<String> adapterDir = new ArrayAdapter<String>(getApplicationContext(), R.layout.my_listview, arr_list);
         listFood = (ListView)findViewById(R.id.listFood);
         listFood.setAdapter(adapterDir);
+
 
 
 

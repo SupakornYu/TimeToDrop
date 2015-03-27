@@ -1,8 +1,10 @@
 package com.earthquake.se.timetodrop;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +22,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
         initialWidget();
         btn1.setOnClickListener(this);
         CreateButton.setOnClickListener(this);
         viewDB.setOnClickListener(this);
+
+
+
     }
 
     private void initialWidget() {

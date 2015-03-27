@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by imuntol on 24/3/2558.
  */
-public class MyDbHelper extends SQLiteOpenHelper {
+public class FoodDb extends SQLiteOpenHelper {
 
         private static final String DB_NAME = "BTS";
         private static final int DB_VERSION = 1;
@@ -27,7 +27,7 @@ public class MyDbHelper extends SQLiteOpenHelper {
         public static final String COL_Position = "Position";
 
 
-        public MyDbHelper(Context context) {
+        public FoodDb(Context context) {
             super(context, DB_NAME, null, DB_VERSION);
         }
 
@@ -42,8 +42,8 @@ public class MyDbHelper extends SQLiteOpenHelper {
                     + "FOREIGN KEY(" + COL_Type_id + ") REFERENCES Type(Type_id),"
                     + "FOREIGN KEY(" + COL_Tag_id + ") REFERENCES Tag(Tag_id));");
 
-            db.execSQL("CREATE TABLE " + TABLE_NAME3 +" (Tag_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + COL_Pic_name + " TEXT)" + COL_Position + " TEXT ;");
+           db.execSQL("CREATE TABLE " + TABLE_NAME3 +" (Tag_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + COL_Pic_name + " TEXT," + COL_Position + " TEXT );");
 
 
             db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Type_name +") VALUES ('Food');");

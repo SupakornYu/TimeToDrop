@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.File;
+import java.io.FileOutputStream;
 
 
 public class AddNew_Item extends ActionBarActivity implements View.OnClickListener{
@@ -26,23 +31,24 @@ public class AddNew_Item extends ActionBarActivity implements View.OnClickListen
     private static Button CameraBtn;
     private static Button saveBtn;
     private static EditText editFoodName;
+    private static Bitmap photo;
     private static int CAMERA_ACTIVITY_REQ = 1;
     private static int GALLERY_REQ = 2;
     private static final String[] Image_Action = {"Camera", "Gallery"};
-    MyDbHelper mHelper;
+
+    FoodDb mHelper;
     SQLiteDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new__item);
-        mHelper = new MyDbHelper(this);
+        mHelper = new FoodDb(this);
         mDb = mHelper.getWritableDatabase();
         initialWidget();
         CameraBtn.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
-
-
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
     }
 
 
@@ -107,21 +113,25 @@ public class AddNew_Item extends ActionBarActivity implements View.OnClickListen
                 //startActivityForResult(intent, CAMERA_ACTIVITY_REQ);
                 break;
 
+
             case R.id.saveBtn:
                 String foodName = editFoodName.getText().toString();
                 if(foodName.length() != 0) {
-                    Cursor mCursor = mDb.rawQuery("SELECT * FROM " + MyDbHelper.TABLE_NAME2
-                            + " WHERE " + MyDbHelper.COL_Name + "='" + foodName + "'"
+                    Cursor mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2
+                            + " WHERE " + FoodDb.COL_Name + "='" + foodName + "'"
                             , null);
                     if (mCursor.getCount() == 0) {
-                        mDb.execSQL("INSERT INTO " + MyDbHelper.TABLE_NAME2 + " ("
-                                + MyDbHelper.COL_Name + ") VALUES ('" + foodName
+                        mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME2 + " ("
+                                + FoodDb.COL_Name + ") VALUES ('" + foodName
                                 + "');");
                     }
+
+
                     editFoodName.setText("");
 
                     Toast.makeText(getApplicationContext(), "Finish!!!", Toast.LENGTH_SHORT).show();
                         }
+
                 }
 
     }
@@ -131,11 +141,13 @@ public class AddNew_Item extends ActionBarActivity implements View.OnClickListen
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         if (imageReturnedIntent != null) {
             if (resultCode == RESULT_OK && requestCode == CAMERA_ACTIVITY_REQ) {
-                Bitmap photo;
+
                 photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
                 ImageView img = (ImageView) findViewById(R.id.imageView);
                 img.setImageBitmap(photo);
-            } else if (resultCode == RESULT_OK && requestCode == GALLERY_REQ) {
+                savePic(photo);
+             
+             } else if (resultCode == RESULT_OK && requestCode == GALLERY_REQ) {
                 Uri uripath = imageReturnedIntent.getData();
                 String[] arrFilePath = {MediaStore.Images.Media.DATA};
                 Cursor cursor = getContentResolver().query(uripath,arrFilePath,null,null,null);
@@ -144,10 +156,30 @@ public class AddNew_Item extends ActionBarActivity implements View.OnClickListen
                 String strPath = cursor.getString(columnIndex);
                 cursor.close();
                 ImageView img = (ImageView) findViewById(R.id.imageView);
-                img.setImageBitmap(BitmapFactory.decodeFile(strPath));
+                photo =  BitmapFactory.decodeFile(strPath);
+                img.setImageBitmap(photo);
 
                 //  Toast.makeText(AddNew_Item.this,strPath.toString(),Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public void savePic(Bitmap pic){
+
+        Long tsLong= System.currentTimeMillis();
+        String ts = tsLong.toString();
+
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/DCIM/"+"IMG_"+ts+".png");
+        try {
+            file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
+            pic.compress(Bitmap.CompressFormat.PNG,100,fos);
+            Toast.makeText(AddNew_Item.this,"Save Pic Complete",Toast.LENGTH_LONG).show();
+            fos.close();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+
     }
 }
