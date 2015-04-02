@@ -69,7 +69,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this,"Hello World",Toast.LENGTH_LONG).show();
                 break;
             case R.id.NewItem:
-                Intent i = new Intent(getApplicationContext(), AddNew_Item.class);
+                Intent i = new Intent(getApplicationContext(), Add_Item.class);
                 startActivity(i);
                 break;
             case R.id.viewbtn:
