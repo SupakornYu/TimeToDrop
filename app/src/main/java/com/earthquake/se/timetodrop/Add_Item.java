@@ -44,7 +44,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         mSurfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         photoBtn.setOnClickListener(this);
         RetakeBtn.setOnClickListener(this);
-
+        timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 
     }
     private void initialWidget() {
