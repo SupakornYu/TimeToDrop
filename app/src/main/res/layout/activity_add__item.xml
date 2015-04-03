@@ -18,12 +18,27 @@
             android:layout_gravity="center_horizontal"
             android:id="@+id/cameraView" />
 
-        <Button
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="take photo"
-            android:id="@+id/photoBtn"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="take photo"
+                android:id="@+id/photoBtn"
+                android:layout_gravity="center_horizontal" />
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="Retake"
+                android:id="@+id/RePhotoBtn"
+                android:layout_gravity="center_horizontal" />
+
+            </FrameLayout>
+
+
 
     </LinearLayout>
 </ScrollView>

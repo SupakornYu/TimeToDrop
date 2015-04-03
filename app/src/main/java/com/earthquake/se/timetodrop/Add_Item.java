@@ -32,8 +32,9 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     Camera mCamera;
     SurfaceView mSurfaceView;
     boolean saveState = false;
-
+    private String timeStamp;
     private static Button photoBtn;
+    private static Button RetakeBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +43,16 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         mSurfaceView.getHolder().addCallback(this);
         mSurfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         photoBtn.setOnClickListener(this);
+        RetakeBtn.setOnClickListener(this);
 
 
     }
     private void initialWidget() {
         mSurfaceView = (SurfaceView) findViewById(R.id.cameraView);
         photoBtn = (Button) findViewById(R.id.photoBtn);
+        RetakeBtn = (Button) findViewById(R.id.RePhotoBtn);
+        photoBtn.setVisibility(View.VISIBLE);
+        RetakeBtn.setVisibility(View.INVISIBLE);
     }
 
     public void onResume() {
@@ -94,13 +99,14 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         Log.d("CameraSystem","surfaceChanged");
-       /*Camera.Parameters params = mCamera.getParameters();
-        List<Camera.Size> previewSize = params.getSupportedPreviewSizes();
+       Camera.Parameters params = mCamera.getParameters();
+       /*List<Camera.Size> previewSize = params.getSupportedPreviewSizes();
         List<Camera.Size> pictureSize = params.getSupportedPictureSizes();
         params.setPictureSize(pictureSize.get(0).width, pictureSize.get(0).height);
-        params.setPreviewSize(previewSize.get(0).width, previewSize.get(0).height);
+        params.setPreviewSize(previewSize.get(0).width, previewSize.get(0).height);*/
+        params.setRotation(90);
         params.setJpegQuality(100);
-        mCamera.setParameters(params);*/
+        mCamera.setParameters(params);
         mCamera.setDisplayOrientation(90);
 
         try {
@@ -121,7 +127,13 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         switch (v.getId()){
             case R.id.photoBtn:
                 saveState = true;
+                photoBtn.setVisibility(View.INVISIBLE);
+                RetakeBtn.setVisibility(View.VISIBLE);
                 mCamera.takePicture(Add_Item.this,null,null,Add_Item.this);
+            case R.id.RePhotoBtn:
+                photoBtn.setVisibility(View.VISIBLE);
+                RetakeBtn.setVisibility(View.INVISIBLE);
+                mCamera.startPreview();
 
 
         }
@@ -129,7 +141,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
 
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
-    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
     Intent imgIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     String imageFileName = "IMG_" + timeStamp + ".jpg";
     File imgFolder = new File(Environment.getExternalStorageDirectory(), "DCIM/TTD");
@@ -147,6 +159,9 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             Toast.makeText(getApplicationContext(), imageFileName, Toast.LENGTH_SHORT).show();
         } catch (FileNotFoundException e) {
         } catch (IOException e) { }
+        Log.d("Camera","Restart Preview");
+        mCamera.stopPreview();
+        saveState = false;
     }
 
     @Override
