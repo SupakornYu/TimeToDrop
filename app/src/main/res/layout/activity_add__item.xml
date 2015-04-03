@@ -24,13 +24,13 @@
             android:layout_gravity="center_horizontal">
 
             <Button
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:text="take photo"
                 android:id="@+id/photoBtn"
                 android:layout_gravity="center_horizontal" />
             <Button
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:text="Retake"
                 android:id="@+id/RePhotoBtn"

@@ -58,13 +58,27 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     public void onResume() {
         Log.d("System","onResume");
         super.onResume();
+        if (mCamera == null) {
+            photoBtn.setVisibility(View.VISIBLE);
+            RetakeBtn.setVisibility(View.INVISIBLE);
+        }
         mCamera = Camera.open();
+
+
+
     }
 
     public void onPause() {
         Log.d("System","onPause");
         super.onPause();
-        mCamera.release();
+        if (mCamera != null){
+            //              mCamera.setPreviewCallback(null);
+            mCamera.stopPreview();
+            mCamera.release();        // release the camera for other applications
+            mCamera = null;
+
+        }
+        //mCamera.release();
     }
 
 
@@ -127,8 +141,6 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         switch (v.getId()){
             case R.id.photoBtn:
                 saveState = true;
-                photoBtn.setVisibility(View.INVISIBLE);
-                RetakeBtn.setVisibility(View.VISIBLE);
                 mCamera.takePicture(Add_Item.this,null,null,Add_Item.this);
             case R.id.RePhotoBtn:
                 photoBtn.setVisibility(View.VISIBLE);
@@ -157,15 +169,20 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             os.flush();
             os.close();
             Toast.makeText(getApplicationContext(), imageFileName, Toast.LENGTH_SHORT).show();
+            photoBtn.setVisibility(View.INVISIBLE);
+            RetakeBtn.setVisibility(View.VISIBLE);
         } catch (FileNotFoundException e) {
         } catch (IOException e) { }
         Log.d("Camera","Restart Preview");
-        mCamera.stopPreview();
-        saveState = false;
+       mCamera.stopPreview();
+       saveState = false;
+
     }
 
     @Override
     public void onShutter() {
 
     }
+
+
 }
