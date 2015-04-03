@@ -31,6 +31,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         , Camera.PictureCallback, Camera.ShutterCallback {
     Camera mCamera;
     SurfaceView mSurfaceView;
+    SurfaceHolder surfaceHolder;
     boolean saveState = false;
     private String timeStamp;
     private static Button photoBtn;
@@ -40,8 +41,9 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__item);
         initialWidget();
-        mSurfaceView.getHolder().addCallback(this);
-        mSurfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        surfaceHolder = mSurfaceView.getHolder();
+        surfaceHolder.addCallback(this);
+        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         photoBtn.setOnClickListener(this);
         RetakeBtn.setOnClickListener(this);
         timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -51,38 +53,9 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         mSurfaceView = (SurfaceView) findViewById(R.id.cameraView);
         photoBtn = (Button) findViewById(R.id.photoBtn);
         RetakeBtn = (Button) findViewById(R.id.RePhotoBtn);
-        photoBtn.setVisibility(View.VISIBLE);
-        RetakeBtn.setVisibility(View.INVISIBLE);
-    }
-
-    public void onResume() {
-        Log.d("System","onResume");
-        super.onResume();
-        if (mCamera == null) {
-            photoBtn.setVisibility(View.VISIBLE);
-            RetakeBtn.setVisibility(View.INVISIBLE);
-        }
-        mCamera = Camera.open();
-
 
 
     }
-
-    public void onPause() {
-        Log.d("System","onPause");
-        super.onPause();
-        if (mCamera != null){
-            //              mCamera.setPreviewCallback(null);
-            mCamera.stopPreview();
-            mCamera.release();        // release the camera for other applications
-            mCamera = null;
-
-        }
-        //mCamera.release();
-    }
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -107,33 +80,48 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        photoBtn.setVisibility(View.VISIBLE);
+        RetakeBtn.setVisibility(View.INVISIBLE);
+        try {
+            // open the camera
+            mCamera = Camera.open();
+        } catch (RuntimeException e) {
+            // check for exceptions
+            System.err.println(e);
+            return;
+        }
+        Camera.Parameters param;
+        param = mCamera.getParameters();
+        param.setRotation(90);
+        // modify parameter
+        param.setRotation(90);
+        param.setJpegQuality(100);
+        mCamera.setParameters(param);
+        mCamera.setDisplayOrientation(90);
+        try {
+            // The Surface has been created, now tell the camera where to draw
+            // the preview.
+            mCamera.setPreviewDisplay(surfaceHolder);
+            mCamera.startPreview();
+        } catch (Exception e) {
+            // check for exceptions
+            System.err.println(e);
+            return;
+        }
 
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        Log.d("CameraSystem","surfaceChanged");
-       Camera.Parameters params = mCamera.getParameters();
-       /*List<Camera.Size> previewSize = params.getSupportedPreviewSizes();
-        List<Camera.Size> pictureSize = params.getSupportedPictureSizes();
-        params.setPictureSize(pictureSize.get(0).width, pictureSize.get(0).height);
-        params.setPreviewSize(previewSize.get(0).width, previewSize.get(0).height);*/
-        params.setRotation(90);
-        params.setJpegQuality(100);
-        mCamera.setParameters(params);
-        mCamera.setDisplayOrientation(90);
+        refreshCamera();
 
-        try {
-            mCamera.setPreviewDisplay(mSurfaceView.getHolder());
-            mCamera.startPreview();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        mCamera.stopPreview();
+        mCamera.release();
+        mCamera = null;
     }
 
     @Override
@@ -141,7 +129,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         switch (v.getId()){
             case R.id.photoBtn:
                 saveState = true;
-                mCamera.takePicture(Add_Item.this,null,null,Add_Item.this);
+                mCamera.takePicture(null,null,Add_Item.this);
             case R.id.RePhotoBtn:
                 photoBtn.setVisibility(View.VISIBLE);
                 RetakeBtn.setVisibility(View.INVISIBLE);
@@ -174,8 +162,8 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         } catch (FileNotFoundException e) {
         } catch (IOException e) { }
         Log.d("Camera","Restart Preview");
-       mCamera.stopPreview();
-       saveState = false;
+      //  refreshCamera();
+
 
     }
 
@@ -184,5 +172,29 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
 
     }
 
+
+    public void refreshCamera() {
+        if (surfaceHolder.getSurface() == null) {
+            // preview surface does not exist
+            return;
+        }
+
+        // stop preview before making changes
+        try {
+            mCamera.stopPreview();
+        } catch (Exception e) {
+            // ignore: tried to stop a non-existent preview
+        }
+
+        // set preview size and make any resize, rotate or
+        // reformatting changes here
+        // start preview with new settings
+        try {
+            mCamera.setPreviewDisplay(surfaceHolder);
+            mCamera.startPreview();
+        } catch (Exception e) {
+
+        }
+    }
 
 }
