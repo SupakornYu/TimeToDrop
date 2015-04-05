@@ -1,22 +1,24 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
+
     tools:context="com.earthquake.se.timetodrop.Add_Item">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#44609c"
+        android:baselineAligned="true"
+        android:gravity="center_vertical">
 
         <SurfaceView
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/cameraView" />
+            android:id="@+id/cameraView"
+            android:layout_marginTop="20dp" />
 
 
 
@@ -25,56 +27,60 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal">
 
-            <Button
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:text="take photo"
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_photo"
                 android:id="@+id/photoBtn"
-                android:layout_gravity="center_horizontal" />
-            <Button
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:text="Retake"
+                android:layout_gravity="center_horizontal"
+                android:background="#ff56879c"
+                android:layout_marginTop="10dp" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_refresh"
                 android:id="@+id/RePhotoBtn"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:background="#ff56879c"
+                android:layout_marginTop="10dp" />
 
 
 
-            </FrameLayout>
+        </FrameLayout>
         <LinearLayout
             android:layout_marginTop="30dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff8f9ba"
+            android:background="#ff44609c"
             android:clickable="false"
             android:gravity="center">
 
-        <TextView
+            <TextView
                 android:id="@+id/editText1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Item Name"
-                android:layout_weight="1"
+                android:layout_weight="1.8"
                 android:gravity="center"/>
             <EditText
                 android:id="@+id/text_FoodName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="input heres"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:singleLine="true" />
 
 
 
-            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff8f9ba"
+            android:layout_height="match_parent"
+            android:background="#44609c"
             android:clickable="false"
             android:gravity="center">
 
@@ -83,14 +89,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Expire date"
-                android:layout_weight="2"
-                android:gravity="center"/>
+                android:layout_weight="2.5"
+                android:gravity="center" />
             <TextView
                 android:id="@+id/text_Date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Click to select Date"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"/>
             <Button
                 android:id="@+id/button_date"
@@ -98,10 +104,17 @@
                 android:layout_height="wrap_content"
                 android:text="..."
                 android:layout_weight="0.5"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="0dp" />
 
-       </LinearLayout>
+        </LinearLayout>
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"></LinearLayout>
 
 
     </LinearLayout>

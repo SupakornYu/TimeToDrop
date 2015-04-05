@@ -15,6 +15,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,8 +40,8 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     SurfaceHolder surfaceHolder;
     boolean saveState = false;
     private String timeStamp;
-    private static Button photoBtn;
-    private static Button RetakeBtn;
+    private static ImageButton photoBtn;
+    private static ImageButton RetakeBtn;
     private Button mDateButton;
     private Calendar mCalendar;
     private TextView mTextDate;
@@ -67,8 +68,8 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     }
     private void initialWidget() {
         mSurfaceView = (SurfaceView) findViewById(R.id.cameraView);
-        photoBtn = (Button) findViewById(R.id.photoBtn);
-        RetakeBtn = (Button) findViewById(R.id.RePhotoBtn);
+        photoBtn = (ImageButton) findViewById(R.id.photoBtn);
+        RetakeBtn = (ImageButton) findViewById(R.id.RePhotoBtn);
         mDateButton = (Button) findViewById(R.id.button_date);
         mTextDate = (TextView) findViewById(R.id.text_Date);
         mCalendar = Calendar.getInstance();
@@ -145,19 +146,19 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.photoBtn:
+
+            if(v.equals(photoBtn)) {
                 saveState = true;
-                mCamera.takePicture(null,null,Add_Item.this);
-            case R.id.RePhotoBtn:
+                mCamera.takePicture(null, null, Add_Item.this);
+            }else if(v.equals(RetakeBtn)){
                 photoBtn.setVisibility(View.VISIBLE);
                 RetakeBtn.setVisibility(View.INVISIBLE);
                 mCamera.startPreview();
-            case R.id.button_date:
-                mDatePicker.setYearRange(2000, 2020);
-                mDatePicker.show(getSupportFragmentManager(), "datePicker");
-
+             }  else if(v.equals(mDateButton)) {
+                 mDatePicker.setYearRange(2000, 2020);
+                 mDatePicker.show(getSupportFragmentManager(), "datePicker");
         }
+
     }
 
     @Override
