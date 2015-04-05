@@ -73,7 +73,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         mDateButton = (Button) findViewById(R.id.button_date);
         mTextDate = (TextView) findViewById(R.id.text_Date);
         mCalendar = Calendar.getInstance();
-
+        
 
     }
     @Override
