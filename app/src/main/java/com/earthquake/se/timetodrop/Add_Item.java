@@ -15,6 +15,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -25,17 +26,26 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import com.fourmob.datetimepicker.date.DatePickerDialog;import java.text.DateFormat;
+import java.util.Calendar;
+
 
 
 public class Add_Item extends ActionBarActivity implements View.OnClickListener,SurfaceHolder.Callback
         , Camera.PictureCallback, Camera.ShutterCallback {
     Camera mCamera;
+    private DatePickerDialog mDatePicker;
     SurfaceView mSurfaceView;
     SurfaceHolder surfaceHolder;
     boolean saveState = false;
     private String timeStamp;
     private static Button photoBtn;
     private static Button RetakeBtn;
+    private Button mDateButton;
+    private Calendar mCalendar;
+    private TextView mTextDate;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +56,22 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         photoBtn.setOnClickListener(this);
         RetakeBtn.setOnClickListener(this);
+        mDateButton.setOnClickListener(this);
         timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        mDatePicker = DatePickerDialog.newInstance(onDateSetListener,
+                mCalendar.get(Calendar.YEAR),       // ปี
+                mCalendar.get(Calendar.MONTH),      // เดือน
+                mCalendar.get(Calendar.DAY_OF_MONTH),// วัน (1-31)
+                false);
 
     }
     private void initialWidget() {
         mSurfaceView = (SurfaceView) findViewById(R.id.cameraView);
         photoBtn = (Button) findViewById(R.id.photoBtn);
         RetakeBtn = (Button) findViewById(R.id.RePhotoBtn);
+        mDateButton = (Button) findViewById(R.id.button_date);
+        mTextDate = (TextView) findViewById(R.id.text_Date);
+        mCalendar = Calendar.getInstance();
 
 
     }
@@ -134,7 +153,9 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 photoBtn.setVisibility(View.VISIBLE);
                 RetakeBtn.setVisibility(View.INVISIBLE);
                 mCamera.startPreview();
-
+            case R.id.button_date:
+                mDatePicker.setYearRange(2000, 2020);
+                mDatePicker.show(getSupportFragmentManager(), "datePicker");
 
         }
     }
@@ -196,5 +217,17 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
 
         }
     }
+    private DatePickerDialog.OnDateSetListener onDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
 
+                    DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
+                    mCalendar.set(year, month, day);
+                    Date date = mCalendar.getTime();
+                    String textDate = dateFormat.format(date);
+
+                    mTextDate.setText(textDate);
+                }
+            };
 }

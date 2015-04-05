@@ -18,6 +18,8 @@
             android:layout_gravity="center_horizontal"
             android:id="@+id/cameraView" />
 
+
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,9 +38,73 @@
                 android:id="@+id/RePhotoBtn"
                 android:layout_gravity="center_horizontal" />
 
+
+
             </FrameLayout>
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff8f9ba"
+            android:clickable="false"
+            android:gravity="center">
+
+        <TextView
+                android:id="@+id/editText1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Item Name"
+                android:layout_weight="1"
+                android:gravity="center"/>
+            <EditText
+                android:id="@+id/text_FoodName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="input heres"
+                android:layout_weight="1"
+                android:singleLine="true" />
+
+
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff8f9ba"
+            android:clickable="false"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/editText3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Expire date"
+                android:layout_weight="2"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/text_Date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Click to select Date"
+                android:layout_weight="1"
+                android:gravity="center"/>
+            <Button
+                android:id="@+id/button_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="..."
+                android:layout_weight="0.5"
+                android:layout_centerHorizontal="true"/>
+
+       </LinearLayout>
 
 
 
     </LinearLayout>
+
+
 </ScrollView>
