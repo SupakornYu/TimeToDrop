@@ -10,13 +10,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.app.ActionBar;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.nhaarman.listviewanimations.itemmanipulation.OnDismissCallback;
-import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
-import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
+
+import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
+import com.nhaarman.listviewanimations.appearance.simple.SwingLeftInAnimationAdapter;
+
 
 import java.util.ArrayList;
 
@@ -39,22 +42,18 @@ public class firstpage extends ActionBarActivity {
         mCursor.moveToFirst();
         while (!mCursor.isAfterLast()) {
             arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Name)));
+            for (int i = 1; i < 50; i++) {
+                arr_list.add("Lorem ipsum quis leo pharetra item #" + i);
+            }
             mCursor.moveToNext();
 
         }
 
-       final  ArrayAdapter<String> adapterDir = new ArrayAdapter<String>(getApplicationContext(), R.layout.my_listview, arr_list);
-        SwipeDismissAdapter swipeDismissAdapter = new SwipeDismissAdapter(adapterDir, new OnDismissCallback() {
-            @Override
-            public void onDismiss(AbsListView listView, int[] reverseSortedPositions) {
-                for (int position : reverseSortedPositions) {
-                    adapterDir.remove(arr_list.get(position));
-                }
-            }
-        });
+        ArrayAdapter<String> adapterDir = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arr_list);
+        SwingLeftInAnimationAdapter animationAdapter = new SwingLeftInAnimationAdapter(adapterDir);
         listFood = (ListView) findViewById(R.id.listFood);
-        swipeDismissAdapter.setAbsListView(listFood);
-        listFood.setAdapter(swipeDismissAdapter);
+        animationAdapter.setAbsListView(listFood);
+        listFood.setAdapter(animationAdapter);
 
     }
     public void onStop() {
