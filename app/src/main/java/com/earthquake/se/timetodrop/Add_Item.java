@@ -2,10 +2,12 @@ package com.earthquake.se.timetodrop;
 
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,8 +29,12 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import com.cengalabs.flatui.FlatUI;
+
 import com.fourmob.datetimepicker.date.DatePickerDialog;import java.text.DateFormat;
 import java.util.Calendar;
+
 
 
 
@@ -36,6 +42,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         , Camera.PictureCallback, Camera.ShutterCallback {
     Camera mCamera;
     private DatePickerDialog mDatePicker;
+
     SurfaceView mSurfaceView;
     SurfaceHolder surfaceHolder;
     boolean saveState = false;
@@ -50,11 +57,20 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //flatUI
+        FlatUI.initDefaultValues(this);
+        FlatUI.setDefaultTheme(FlatUI.SEA);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(FlatUI.getActionBarDrawable(this, FlatUI.GRASS, false));
         setContentView(R.layout.activity_add__item);
+
+        //camera
         initialWidget();
         surfaceHolder = mSurfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
         photoBtn.setOnClickListener(this);
         RetakeBtn.setOnClickListener(this);
         mDateButton.setOnClickListener(this);
@@ -65,7 +81,11 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 mCalendar.get(Calendar.DAY_OF_MONTH),// วัน (1-31)
                 false);
 
+
+
+
     }
+
     private void initialWidget() {
         mSurfaceView = (SurfaceView) findViewById(R.id.cameraView);
         photoBtn = (ImageButton) findViewById(R.id.photoBtn);

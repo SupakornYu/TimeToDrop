@@ -7,5 +7,6 @@
     <string name="title_activity_view_db">ViewDB</string>
     <string name="title_activity_add__item">Add_Item</string>
     <string name="title_activity_firstpage">firstpage</string>
-    <string name="title_activity_main_activity2">MainActivity2Activity</string>
+    <string name="title_activity_startlogo">startlogo</string>
+
 </resources>
