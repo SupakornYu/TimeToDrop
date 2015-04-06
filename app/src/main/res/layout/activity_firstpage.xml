@@ -4,11 +4,15 @@
     tools:context="com.earthquake.se.timetodrop.firstpage"
     android:weightSum="1">
 
-    <ListView
+ <!--   <ListView
         android:id="@+id/listFood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp" />
+        android:layout_margin="20dp" />-->
+    <com.nhaarman.listviewanimations.itemmanipulation.DynamicListView
+        android:id="@+id/listFood"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>
