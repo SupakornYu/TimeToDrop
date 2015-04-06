@@ -23,4 +23,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.github.flavienlaurent.datetimepicker:library:0.0.1'
+    compile 'com.nhaarman.listviewanimations:library:2.6.0'
+
 }

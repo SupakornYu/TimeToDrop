@@ -4,14 +4,11 @@
     tools:context="com.earthquake.se.timetodrop.firstpage"
     android:weightSum="1">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ListView
+        android:id="@+id/listFood"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ff688edb"
-        android:weightSum="1">
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp" />
 
 
 </LinearLayout>

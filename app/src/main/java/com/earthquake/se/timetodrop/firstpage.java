@@ -10,7 +10,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.app.ActionBar;
+import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.nhaarman.listviewanimations.itemmanipulation.OnDismissCallback;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
+import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 import java.util.ArrayList;
 
@@ -29,7 +35,7 @@ public class firstpage extends ActionBarActivity {
         mDb = mHelper.getReadableDatabase();
 
         mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2, null);
-        ArrayList<String> arr_list = new ArrayList<String>();
+        final ArrayList<String> arr_list = new ArrayList<String>();
         mCursor.moveToFirst();
         while (!mCursor.isAfterLast()) {
             arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Name)));
@@ -37,7 +43,19 @@ public class firstpage extends ActionBarActivity {
 
         }
 
+       final  ArrayAdapter<String> adapterDir = new ArrayAdapter<String>(getApplicationContext(), R.layout.my_listview, arr_list);
+        SwipeDismissAdapter swipeDismissAdapter = new SwipeDismissAdapter(adapterDir, new OnDismissCallback() {
+            @Override
+            public void onDismiss(AbsListView listView, int[] reverseSortedPositions) {
+                for (int position : reverseSortedPositions) {
+                    adapterDir.remove(arr_list.get(position));
+                }
+            }
+        });
         listFood = (ListView) findViewById(R.id.listFood);
+        swipeDismissAdapter.setAbsListView(listFood);
+        listFood.setAdapter(swipeDismissAdapter);
+
     }
     public void onStop() {
         super.onStop();
