@@ -53,6 +53,13 @@ public class firstpage extends ActionBarActivity {
         //return true;
     }
 
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item= menu.findItem(R.id.action_settings);
+        item.setVisible(false);
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -63,8 +70,8 @@ public class firstpage extends ActionBarActivity {
             case R.id.action_new:
                 Intent i = new Intent(getApplicationContext(), Add_Item.class);
                 startActivity(i);
+                overridePendingTransition(R.animator.animation1,R.animator.animation2);
                 break;
-
 
 
 
