@@ -12,19 +12,25 @@ public class FoodDb extends SQLiteOpenHelper {
         private static final String DB_NAME = "BTS";
         private static final int DB_VERSION = 1;
 
-        public static final String TABLE_NAME1 = "Type";
-        public static final String COL_Type_name = "Type_name";
+        public static final String TABLE_NAME1 = "Group";
+        public static final String COL_Group_id = "Group_id";
+        public static final String COL_Colour = "Colour";
+        public static final String COL_Colour_code = "Colour_code";
+        public static final String COL_Group_Detail = "Group_detail";
 
         public static final String TABLE_NAME2 = "Item";
-        public static final String COL_Name = "Name";
-        public static final String COL_Type_id = "Type_id";
-        public static final String COL_Expried_date = "Expried_date";
-        public static final String COL_Alarm = "Alarm";
-        public static final String COL_Tag_id = "Tag_id" ;
+        public static final String COL_Item_id = "Item_id";
+        public static final String COL_Expire_date = "Expire_date";
+        public static final String COL_Warn_days = "Warn_days";
+        public static final String COL_G_id = "Group_id";
+        public static final String COL_Item_Detail = "Item_detail";
+        public static final String COL_P_id = "Photo_id";
 
-        public static final String TABLE_NAME3 = "Tag";
-        public static final String COL_Pic_name = "Pic_name";
+
+        public static final String TABLE_NAME3 = "Photo_tag";
+        public static final String COLP_Photo_tag_id = "Photo_tag_id";
         public static final String COL_Position = "Position";
+        public static final String COL_Path = "Path";
 
 
         public FoodDb(Context context) {
@@ -33,30 +39,29 @@ public class FoodDb extends SQLiteOpenHelper {
 
         public void onCreate(SQLiteDatabase db) {
 
-            db.execSQL("CREATE TABLE " + TABLE_NAME1 +" (Type_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + COL_Type_name + " TEXT);");
+            db.execSQL("CREATE TABLE " + TABLE_NAME1 +" (" + COL_Group_id + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + COL_Colour + " TEXT , " + COL_Colour + " TEXT , " + COL_Colour_code + " TEXT , " + COL_Group_Detail + " TEXT DEFAULT NULL );");
 
-            db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (Item_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + COL_Name + " TEXT, " + COL_Type_id + " INTEGER, " + COL_Expried_date + " TEXT, "
-                    + COL_Alarm + "TEXT," + COL_Tag_id + " INTEGER DEFAULT NULL, "
-                    + "FOREIGN KEY(" + COL_Type_id + ") REFERENCES Type(Type_id),"
-                    + "FOREIGN KEY(" + COL_Tag_id + ") REFERENCES Tag(Tag_id));");
+            db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (" + COL_Item_id + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + COL_Expire_date + " TEXT, " + COL_Warn_days + " INTEGER, " + COL_G_id + " INTEGER, "
+                    + COL_Item_Detail + "TEXT," + COL_P_id + " INTEGER DEFAULT NULL, "
+                    + "FOREIGN KEY(" + COL_G_id + ") REFERENCES "+ TABLE_NAME2 +"("+ COL_Group_id +"),"
+                    + "FOREIGN KEY(" + COL_P_id + ") REFERENCES "+ TABLE_NAME3 +"("+ COLP_Photo_tag_id +"));");
 
-           db.execSQL("CREATE TABLE " + TABLE_NAME3 +" (Tag_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + COL_Pic_name + " TEXT," + COL_Position + " TEXT );");
+           db.execSQL("CREATE TABLE " + TABLE_NAME3 +" ("+ COLP_Photo_tag_id +"INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + COL_Position + " TEXT," + COL_Path + " TEXT );");
 
 
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Type_name +") VALUES ('Food');");
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Type_name +") VALUES ('Medicine');");
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Type_name +") VALUES ('Snack');");
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Type_name +") VALUES ('Milk');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ",) VALUES ('Red','#FF0000');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ",) VALUES ('Blue','#2E2EFE');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ",) VALUES ('Yellow','#F7FE2E');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ",) VALUES ('Green','#2EFE2E');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ",) VALUES ('Pink','#FE2EC8');");
         }
 
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME1);
-            onCreate(db);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME2);
-            onCreate(db);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME3);
             onCreate(db);
         }
