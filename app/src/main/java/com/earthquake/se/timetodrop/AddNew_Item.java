@@ -31,6 +31,10 @@ import java.util.Date;
 
 
 public class AddNew_Item extends ActionBarActivity implements View.OnClickListener{
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     private static Button CameraBtn;
     private static Button saveBtn;
@@ -67,29 +71,6 @@ public class AddNew_Item extends ActionBarActivity implements View.OnClickListen
         imgView = (ImageView) findViewById(R.id.imageView);
 
 
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_new__item, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -154,8 +135,10 @@ public class AddNew_Item extends ActionBarActivity implements View.OnClickListen
                     editFoodName.setText("");
 
                     Toast.makeText(getApplicationContext(), "Finish!!!", Toast.LENGTH_SHORT).show();
-                        }
-                else {
+                    //onBackPressed();
+                    Intent i = new Intent(getApplicationContext(), firstpage.class);
+                    startActivity(i);
+                } else {
                     Toast.makeText(getApplicationContext(),"Please Input Item Name",Toast.LENGTH_SHORT).show();
 
                 }
