@@ -8,5 +8,7 @@
     <string name="title_activity_add__item">Add_Item</string>
     <string name="title_activity_firstpage">firstpage</string>
     <string name="title_activity_startlogo">startlogo</string>
-
+    <string name="complete">Completed</string>
+    <string name="error">Error!</string>
+    <string name="upload">Upload</string>
 </resources>

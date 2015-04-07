@@ -32,6 +32,7 @@ import java.util.List;
 
 import com.cengalabs.flatui.FlatUI;
 
+import com.dd.CircularProgressButton;
 import com.fourmob.datetimepicker.date.DatePickerDialog;import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -81,10 +82,14 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 mCalendar.get(Calendar.DAY_OF_MONTH),// วัน (1-31)
                 false);
 
-
-
-
     }
+
+
+
+
+
+
+
 
     private void initialWidget() {
         mSurfaceView = (SurfaceView) findViewById(R.id.cameraView);

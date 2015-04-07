@@ -24,5 +24,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.github.flavienlaurent.datetimepicker:library:0.0.1'
     compile 'com.github.eluleci:flatui:2.1.1'
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
+
+
 
 }
