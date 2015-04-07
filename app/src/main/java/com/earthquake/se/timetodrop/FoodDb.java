@@ -16,6 +16,7 @@ public class FoodDb extends SQLiteOpenHelper {
         public static final String COL_Type_name = "Type_name";
 
         public static final String TABLE_NAME2 = "Item";
+        public static final String COL_Itemid = "id";
         public static final String COL_Name = "Name";
         public static final String COL_Type_id = "Type_id";
         public static final String COL_Expried_date = "Expried_date";
@@ -36,7 +37,7 @@ public class FoodDb extends SQLiteOpenHelper {
             db.execSQL("CREATE TABLE " + TABLE_NAME1 +" (Type_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + COL_Type_name + " TEXT);");
 
-            db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (Item_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            db.execSQL("CREATE TABLE " + TABLE_NAME2 +" ("+COL_Itemid+" INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + COL_Name + " TEXT, " + COL_Type_id + " INTEGER, " + COL_Expried_date + " TEXT, "
                     + COL_Alarm + "TEXT," + COL_Tag_id + " INTEGER DEFAULT NULL, "
                     + "FOREIGN KEY(" + COL_Type_id + ") REFERENCES Type(Type_id),"

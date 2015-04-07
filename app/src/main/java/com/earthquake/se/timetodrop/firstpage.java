@@ -45,6 +45,7 @@ public class firstpage extends ActionBarActivity {
     Cursor mCursor;
     DynamicListView listFood;
     static ArrayList<String> arr_list = new ArrayList<String>();
+    static ArrayList<Integer> arr_list_id = new ArrayList<Integer>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +57,16 @@ public class firstpage extends ActionBarActivity {
         mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2, null);
         mCursor.moveToFirst();
         while (!mCursor.isAfterLast()) {
+            int id = mCursor.getInt(0);
             arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Name)));
+            arr_list_id.add(id);
 
             mCursor.moveToNext();
 
         }
+
+
+
         listFood = (DynamicListView) findViewById(R.id.listFood);
         ArrayAdapter<String> adapterDir = new MyListAdapter(this);
         SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapterDir, this, new MyOnDismissCallback(adapterDir));
@@ -78,9 +84,11 @@ public class firstpage extends ActionBarActivity {
     }
     public void onStop() {
         super.onStop();
-        mHelper.close();
+       mHelper.close();
         mDb.close();
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Inflate the menu; this adds items to the action bar if it is present.
@@ -99,7 +107,7 @@ public class firstpage extends ActionBarActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_new:
-                Intent i = new Intent(getApplicationContext(), Add_Item.class);
+                Intent i = new Intent(getApplicationContext(), AddNew_Item.class);
                 startActivity(i);
                 break;
 
@@ -119,7 +127,8 @@ public class firstpage extends ActionBarActivity {
         MyListAdapter(final Context context) {
             mContext = context;
             for (int i = 0; i < arr_list.size(); i++) {
-                add(arr_list.get(i));
+                add(arr_list.get(i)+String.valueOf(arr_list_id.get(i)));
+
             }
         }
 
@@ -181,9 +190,14 @@ public class firstpage extends ActionBarActivity {
             if (mToast != null) {
                 mToast.cancel();
             }
+            mDb = mHelper.getWritableDatabase();
+            // delete file from database
+           mDb.execSQL("DELETE FROM " + FoodDb.TABLE_NAME2
+                    + " WHERE " +FoodDb.COL_Itemid+ "='"+arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1,2)))+"';");
+           mDb.close();
             mToast = Toast.makeText(
                     firstpage.this,
-                    getString(R.string.removed_positions, Arrays.toString(reverseSortedPositions)),
+                    getString(R.string.removed_positions, arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1,2)))),
                     Toast.LENGTH_LONG
             );
             mToast.show();
