@@ -56,6 +56,7 @@ public class firstpage extends ActionBarActivity {
         mDb = mHelper.getWritableDatabase();
         mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2, null);
         mCursor.moveToFirst();
+        arr_list.clear();
         while (!mCursor.isAfterLast()) {
             int id = mCursor.getInt(0);
             arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Name)));
@@ -79,13 +80,12 @@ public class firstpage extends ActionBarActivity {
 
 
 
-
-
     }
     public void onStop() {
         super.onStop();
        mHelper.close();
         mDb.close();
+
     }
 
 
@@ -98,6 +98,7 @@ public class firstpage extends ActionBarActivity {
         return true;
         //return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -131,6 +132,7 @@ public class firstpage extends ActionBarActivity {
 
             }
         }
+
 
         @Override
         public long getItemId(final int position) {

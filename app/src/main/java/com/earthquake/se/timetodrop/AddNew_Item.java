@@ -135,7 +135,9 @@ public class AddNew_Item extends ActionBarActivity implements View.OnClickListen
                     editFoodName.setText("");
 
                     Toast.makeText(getApplicationContext(), "Finish!!!", Toast.LENGTH_SHORT).show();
-                    onBackPressed();
+                    //onBackPressed();
+                    Intent i = new Intent(getApplicationContext(), firstpage.class);
+                    startActivity(i);
                 } else {
                     Toast.makeText(getApplicationContext(),"Please Input Item Name",Toast.LENGTH_SHORT).show();
 
