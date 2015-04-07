@@ -4,12 +4,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.app.ActionBar;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -65,6 +64,8 @@ public class firstpage extends ActionBarActivity {
                 Intent i = new Intent(getApplicationContext(), Add_Item.class);
                 startActivity(i);
                 break;
+
+
 
 
 
