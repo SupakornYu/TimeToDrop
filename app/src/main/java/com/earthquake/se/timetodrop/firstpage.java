@@ -59,7 +59,7 @@ public class firstpage extends ActionBarActivity {
         arr_list.clear();
         while (!mCursor.isAfterLast()) {
             int id = mCursor.getInt(0);
-            arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Name)));
+            arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
             arr_list_id.add(id);
 
             mCursor.moveToNext();
@@ -97,7 +97,7 @@ public class firstpage extends ActionBarActivity {
         arr_list.clear();
         while (!mCursor.isAfterLast()) {
             int id = mCursor.getInt(0);
-            arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Name)));
+            arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
             arr_list_id.add(id);
 
             mCursor.moveToNext();
@@ -223,7 +223,7 @@ public class firstpage extends ActionBarActivity {
             mDb = mHelper.getWritableDatabase();
             // delete file from database
            mDb.execSQL("DELETE FROM " + FoodDb.TABLE_NAME2
-                    + " WHERE " +FoodDb.COL_Itemid+ "='"+arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1,2)))+"';");
+                    + " WHERE " +FoodDb.COL_Item_id+ "='"+arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1,2)))+"';");
            mDb.close();
             mToast = Toast.makeText(
                     firstpage.this,
