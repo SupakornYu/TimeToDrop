@@ -87,7 +87,35 @@ public class firstpage extends ActionBarActivity {
         mDb.close();
 
     }
+    public void onResume(){
+        super.onResume();
+        mHelper = new FoodDb(this);
+        mDb = mHelper.getReadableDatabase();
+        mDb = mHelper.getWritableDatabase();
+        mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2, null);
+        mCursor.moveToFirst();
+        arr_list.clear();
+        while (!mCursor.isAfterLast()) {
+            int id = mCursor.getInt(0);
+            arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Name)));
+            arr_list_id.add(id);
 
+            mCursor.moveToNext();
+
+        }
+
+
+
+        listFood = (DynamicListView) findViewById(R.id.listFood);
+        ArrayAdapter<String> adapterDir = new MyListAdapter(this);
+        SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapterDir, this, new MyOnDismissCallback(adapterDir));
+        AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
+        animAdapter.setAbsListView(listFood);
+        assert animAdapter.getViewAnimator() != null;
+        animAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
+        listFood.setAdapter(animAdapter);
+        listFood.enableSimpleSwipeUndo();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
