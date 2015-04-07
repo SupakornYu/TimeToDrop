@@ -1,6 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -163,60 +164,55 @@
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:src="@drawable/one"
                     android:id="@+id/one"
                     flatui:fl_blockButtonEffectHeight="3dp"
                     android:layout_marginLeft="40dp"
                     android:text="1"
                     flatui:fl_theme="@array/sea"
-                    android:textSize="@dimen/abc_action_button_min_width_overflow_material" />
+                    android:textSize="30dp" />
 
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:src="@drawable/two"
                     android:id="@+id/two"
                     flatui:fl_blockButtonEffectHeight="3dp"
                     android:layout_marginLeft="5dp"
                     android:text="2"
                     flatui:fl_theme="@array/sea"
-                    android:textSize="@dimen/abc_action_button_min_width_overflow_material"/>
+                    android:textSize="30dp"/>
 
 
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:src="@drawable/three"
                     android:id="@+id/three"
                     flatui:fl_blockButtonEffectHeight="3dp"
                     android:layout_marginLeft="5dp"
                     android:text="3"
                     flatui:fl_theme="@array/sea"
-                    android:textSize="@dimen/abc_action_button_min_width_overflow_material"/>
+                    android:textSize="30dp"/>
 
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:src="@drawable/four"
                     android:id="@+id/four"
                     flatui:fl_blockButtonEffectHeight="3dp"
                     android:layout_marginLeft="5dp"
                     android:text="4"
                     flatui:fl_theme="@array/sea"
-                    android:textSize="@dimen/abc_action_button_min_width_overflow_material"/>
+                    android:textSize="30dp"/>
 
 
 
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:src="@drawable/five"
                     android:id="@+id/five"
                     flatui:fl_blockButtonEffectHeight="3dp"
                     android:layout_marginLeft="5dp"
                     android:text="5"
                     flatui:fl_theme="@array/sea"
-                    android:textSize="@dimen/abc_action_button_min_width_overflow_material"/>
+                    android:textSize="30dp"/>
 
             </LinearLayout>
 
@@ -261,7 +257,6 @@
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/five"
                     android:id="@+id/blue"
                     flatui:fl_blockButtonEffectHeight="3dp"
                     android:layout_marginLeft="5dp"
@@ -306,15 +301,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="70dp">
+                android:layout_marginTop="70dp"
+                android:gravity="center_horizontal">
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                </LinearLayout>
+                <com.dd.CircularProgressButton
+                    android:id="@+id/circular_button_simple"
+                    android:layout_width="196dp"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:cpb_textComplete="@string/complete"
+                    app:cpb_textError="@string/error"
+                    app:cpb_textIdle="@string/upload" />
+                     />
 
             </LinearLayout>
 

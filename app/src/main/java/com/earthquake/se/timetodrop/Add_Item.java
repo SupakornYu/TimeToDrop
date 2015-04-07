@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,20 +21,20 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cengalabs.flatui.FlatUI;
+import com.dd.CircularProgressButton;
+import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-import com.cengalabs.flatui.FlatUI;
-
-import com.dd.CircularProgressButton;
-import com.fourmob.datetimepicker.date.DatePickerDialog;import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
+
 
 
 
@@ -43,7 +43,9 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         , Camera.PictureCallback, Camera.ShutterCallback {
     Camera mCamera;
     private DatePickerDialog mDatePicker;
-
+    CircularProgressButton mCircularButtonSimple;
+    CircularProgressButton mCircularButtonComplete;
+    CircularProgressButton mCircularButtonError;
     SurfaceView mSurfaceView;
     SurfaceHolder surfaceHolder;
     boolean saveState = false;
@@ -61,7 +63,6 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         //flatUI
         FlatUI.initDefaultValues(this);
         FlatUI.setDefaultTheme(FlatUI.SEA);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(FlatUI.getActionBarDrawable(this, FlatUI.GRASS, false));
         setContentView(R.layout.activity_add__item);
@@ -82,11 +83,29 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 mCalendar.get(Calendar.DAY_OF_MONTH),// วัน (1-31)
                 false);
 
+        ////////buttoncode////////////////////
+        mCircularButtonSimple = (CircularProgressButton)
+                findViewById(R.id.circular_button_simple);
+
+        mCircularButtonSimple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCircularButtonSimple.getProgress() == 0) {
+                    mCircularButtonSimple.setProgress(50);
+                } else if (mCircularButtonSimple.getProgress() == 100) {
+                    mCircularButtonSimple.setProgress(0);
+                } else {
+                    mCircularButtonSimple.setProgress(100);
+                }
+            }
+        });
+
+
+
+
+
+
     }
-
-
-
-
 
 
 
