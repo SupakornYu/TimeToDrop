@@ -8,4 +8,8 @@
     <string name="title_activity_add__item">Add_Item</string>
     <string name="title_activity_firstpage">firstpage</string>
     <string name="title_activity_main_activity2">MainActivity2Activity</string>
+    <string name="row_number">This is row number %d</string>
+    <string name="itemdeleted">Item deleted</string>
+    <string name="taptoundo">Tap to undo</string>
+    <string name="removed_positions">Removed positions: %s</string>
 </resources>

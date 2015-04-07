@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import android.widget.ArrayAdapter;
 import com.fourmob.datetimepicker.date.DatePickerDialog;import java.text.DateFormat;
 import java.util.Calendar;
 
