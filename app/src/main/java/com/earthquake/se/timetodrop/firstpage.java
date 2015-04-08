@@ -46,6 +46,7 @@ public class firstpage extends ActionBarActivity {
     DynamicListView listFood;
     static ArrayList<String> arr_list = new ArrayList<String>();
     static ArrayList<Integer> arr_list_id = new ArrayList<Integer>();
+    ArrayAdapter<String> adapterDir;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,7 @@ public class firstpage extends ActionBarActivity {
         mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2, null);
         mCursor.moveToFirst();
         arr_list.clear();
+        arr_list_id.clear();
         while (!mCursor.isAfterLast()) {
             int id = mCursor.getInt(0);
             arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
@@ -69,7 +71,7 @@ public class firstpage extends ActionBarActivity {
 
 
         listFood = (DynamicListView) findViewById(R.id.listFood);
-        ArrayAdapter<String> adapterDir = new MyListAdapter(this);
+        adapterDir = new MyListAdapter(this);
         SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapterDir, this, new MyOnDismissCallback(adapterDir));
         AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
         animAdapter.setAbsListView(listFood);
@@ -95,6 +97,7 @@ public class firstpage extends ActionBarActivity {
         mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2, null);
         mCursor.moveToFirst();
         arr_list.clear();
+        arr_list_id.clear();
         while (!mCursor.isAfterLast()) {
             int id = mCursor.getInt(0);
             arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
@@ -115,6 +118,8 @@ public class firstpage extends ActionBarActivity {
         animAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
         listFood.setAdapter(animAdapter);
         listFood.enableSimpleSwipeUndo();
+
+
     }
 
     @Override
@@ -213,6 +218,8 @@ public class firstpage extends ActionBarActivity {
 
         @Override
         public void onDismiss(@NonNull final ViewGroup listView, @NonNull final int[] reverseSortedPositions) {
+
+            adapterDir.notifyDataSetChanged();
             for (int position : reverseSortedPositions) {
                 mAdapter.remove(position);
             }
@@ -220,11 +227,9 @@ public class firstpage extends ActionBarActivity {
             if (mToast != null) {
                 mToast.cancel();
             }
-            mDb = mHelper.getWritableDatabase();
-            // delete file from database
-           mDb.execSQL("DELETE FROM " + FoodDb.TABLE_NAME2
-                    + " WHERE " +FoodDb.COL_Item_id+ "='"+arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1,2)))+"';");
-           mDb.close();
+
+            int id =  arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1, 2)));
+            deleteRow(id);
             mToast = Toast.makeText(
                     firstpage.this,
                     getString(R.string.removed_positions, arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1,2)))),
@@ -234,6 +239,15 @@ public class firstpage extends ActionBarActivity {
 
         }
 
+    }
+
+    private void deleteRow(int id) {
+        mDb = mHelper.getWritableDatabase();
+        // delete file from database
+        mDb.execSQL("DELETE FROM " + FoodDb.TABLE_NAME2
+                + " WHERE " +FoodDb.COL_Item_id+ "='"+id+"';");
+
+        mDb.close();
     }
 
 }
