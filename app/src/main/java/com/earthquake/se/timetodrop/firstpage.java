@@ -229,25 +229,29 @@ public class firstpage extends ActionBarActivity {
             }
 
             int id =  arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1, 2)));
-            deleteRow(id);
+            int posittion =Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1,2));
+
             mToast = Toast.makeText(
                     firstpage.this,
                     getString(R.string.removed_positions, arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1,2)))),
                     Toast.LENGTH_LONG
             );
             mToast.show();
+            deleteRow(id,posittion);
 
         }
 
     }
 
-    private void deleteRow(int id) {
+    private void deleteRow(int id,int position) {
         mDb = mHelper.getWritableDatabase();
         // delete file from database
         mDb.execSQL("DELETE FROM " + FoodDb.TABLE_NAME2
                 + " WHERE " +FoodDb.COL_Item_id+ "='"+id+"';");
 
         mDb.close();
+        arr_list.remove(position);
+        arr_list_id.remove(position);
     }
 
 }
