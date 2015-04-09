@@ -12,4 +12,8 @@
     <string name="itemdeleted">Item deleted</string>
     <string name="taptoundo">Tap to undo</string>
     <string name="removed_positions">Removed positions: %s</string>
+    <string name="title_activity_startlogo">startlogo</string>
+    <string name="complete">Completed</string>
+    <string name="error">Error!</string>
+    <string name="upload">Upload</string>
 </resources>
