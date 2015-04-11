@@ -26,7 +26,7 @@ public class ViewDB extends ActionBarActivity {
         ArrayList<String> arr_list = new ArrayList<String>();
         mCursor.moveToFirst();
         while(!mCursor.isAfterLast() ){
-            arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Name)) );
+            arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)) );
             mCursor.moveToNext();
         }
         ArrayAdapter<String> adapterDir = new ArrayAdapter<String>(getApplicationContext(), R.layout.my_listview, arr_list);

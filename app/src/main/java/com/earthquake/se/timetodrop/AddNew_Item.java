@@ -123,11 +123,11 @@ public class AddNew_Item extends ActionBarActivity implements View.OnClickListen
                 String foodName = editFoodName.getText().toString();
                 if(foodName.length() != 0) {
                     Cursor mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2
-                            + " WHERE " + FoodDb.COL_Name + "='" + foodName + "'"
+                            + " WHERE " + FoodDb.COL_Item_Detail + "='" + foodName + "';"
                             , null);
                     if (mCursor.getCount() == 0) {
                         mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME2 + " ("
-                                + FoodDb.COL_Name + ") VALUES ('" + foodName
+                                + FoodDb.COL_Item_Detail + ") VALUES ('" + foodName
                                 + "');");
                     }
 

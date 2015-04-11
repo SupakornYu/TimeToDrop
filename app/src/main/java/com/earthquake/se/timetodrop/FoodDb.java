@@ -12,11 +12,11 @@ public class FoodDb extends SQLiteOpenHelper {
         private static final String DB_NAME = "BTS";
         private static final int DB_VERSION = 1;
 
-        public static final String TABLE_NAME1 = "Group";
-        public static final String COL_Group_id = "Group_id";
-        public static final String COL_Colour = "Colour";
+        public static final String TABLE_NAME1 = "Colour_tag";
+        public static final String COL_Group_id = "Colour_tag_id";
+        public static final String COL_Colour = "Colour_name";
         public static final String COL_Colour_code = "Colour_code";
-        public static final String COL_Group_Detail = "Group_detail";
+        public static final String COL_Group_Detail = "Colour_tag_detail";
 
         public static final String TABLE_NAME2 = "Item";
         public static final String COL_Item_id = "Item_id";
@@ -40,23 +40,23 @@ public class FoodDb extends SQLiteOpenHelper {
         public void onCreate(SQLiteDatabase db) {
 
             db.execSQL("CREATE TABLE " + TABLE_NAME1 +" (" + COL_Group_id + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + COL_Colour + " TEXT , " + COL_Colour + " TEXT , " + COL_Colour_code + " TEXT , " + COL_Group_Detail + " TEXT DEFAULT NULL );");
+                    + COL_Colour + " TEXT , " + COL_Colour_code + " TEXT , " + COL_Group_Detail + " TEXT DEFAULT NULL );");
 
             db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (" + COL_Item_id + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + COL_Expire_date + " TEXT, " + COL_Warn_days + " INTEGER, " + COL_G_id + " INTEGER, "
-                    + COL_Item_Detail + "TEXT," + COL_P_id + " INTEGER DEFAULT NULL, "
+                    + COL_Item_Detail + " TEXT, " + COL_P_id + " INTEGER DEFAULT NULL, "
                     + "FOREIGN KEY(" + COL_G_id + ") REFERENCES "+ TABLE_NAME2 +"("+ COL_Group_id +"),"
                     + "FOREIGN KEY(" + COL_P_id + ") REFERENCES "+ TABLE_NAME3 +"("+ COLP_Photo_tag_id +"));");
 
-           db.execSQL("CREATE TABLE " + TABLE_NAME3 +" ("+ COLP_Photo_tag_id +"INTEGER PRIMARY KEY AUTOINCREMENT, "
+           db.execSQL("CREATE TABLE " + TABLE_NAME3 +" ("+ COLP_Photo_tag_id +" INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + COL_Position + " TEXT," + COL_Path + " TEXT );");
 
 
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ",) VALUES ('Red','#FF0000');");
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ",) VALUES ('Blue','#2E2EFE');");
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ",) VALUES ('Yellow','#F7FE2E');");
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ",) VALUES ('Green','#2EFE2E');");
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ",) VALUES ('Pink','#FE2EC8');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('Red','#FF0000');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('Blue','#2E2EFE');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('Yellow','#F7FE2E');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('Green','#2EFE2E');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('Pink','#FE2EC8');");
         }
 
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
