@@ -45,6 +45,7 @@ public class firstpage extends ActionBarActivity {
     Cursor mCursor;
     DynamicListView listFood;
     static ArrayList<String> arr_list = new ArrayList<String>();
+    static ArrayList<String> img_uri = new ArrayList<String>();
     static ArrayList<Integer> arr_list_id = new ArrayList<Integer>();
     ArrayAdapter<String> adapterDir;
     @Override
@@ -57,11 +58,11 @@ public class firstpage extends ActionBarActivity {
         mDb = mHelper.getWritableDatabase();
         mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2, null);
         mCursor.moveToFirst();
-        arr_list.clear();
-        arr_list_id.clear();
+        clearArray();
         while (!mCursor.isAfterLast()) {
             int id = mCursor.getInt(0);
             arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
+            img_uri.add("URI : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Expire_date)));
             arr_list_id.add(id);
 
             mCursor.moveToNext();
@@ -71,7 +72,7 @@ public class firstpage extends ActionBarActivity {
 
 
         listFood = (DynamicListView) findViewById(R.id.listFood);
-        adapterDir = new MyListAdapter(this);
+        adapterDir = new MyListAdapter(this,arr_list,img_uri);
         SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapterDir, this, new MyOnDismissCallback(adapterDir));
         AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
         animAdapter.setAbsListView(listFood);
@@ -80,6 +81,14 @@ public class firstpage extends ActionBarActivity {
         listFood.setAdapter(animAdapter);
         listFood.enableSimpleSwipeUndo();
 
+
+
+    }
+
+    public void clearArray(){
+        arr_list.clear();
+        arr_list_id.clear();
+        img_uri.clear();
 
 
     }
@@ -96,11 +105,11 @@ public class firstpage extends ActionBarActivity {
         mDb = mHelper.getWritableDatabase();
         mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2, null);
         mCursor.moveToFirst();
-        arr_list.clear();
-        arr_list_id.clear();
+        clearArray();
         while (!mCursor.isAfterLast()) {
             int id = mCursor.getInt(0);
             arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
+            img_uri.add("URI : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Expire_date)));
             arr_list_id.add(id);
 
             mCursor.moveToNext();
@@ -110,7 +119,7 @@ public class firstpage extends ActionBarActivity {
 
 
         listFood = (DynamicListView) findViewById(R.id.listFood);
-        ArrayAdapter<String> adapterDir = new MyListAdapter(this);
+        adapterDir = new MyListAdapter(this,arr_list,img_uri);
         SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapterDir, this, new MyOnDismissCallback(adapterDir));
         AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
         animAdapter.setAbsListView(listFood);
@@ -166,13 +175,18 @@ public class firstpage extends ActionBarActivity {
     private static class MyListAdapter extends ArrayAdapter<String> implements UndoAdapter {
 
         private final Context mContext;
+     ArrayList<String> Detail= new ArrayList<String>();
+        ArrayList<String> Uri= new ArrayList<String>();
 
-        MyListAdapter(final Context context) {
+        MyListAdapter(final Context context, ArrayList<String> arr_list, ArrayList<String> img_uri) {
             mContext = context;
-            for (int i = 0; i < arr_list.size(); i++) {
-                add(arr_list.get(i)+String.valueOf(arr_list_id.get(i)));
+            Detail = arr_list;
+            Uri = img_uri;
+            for (int i = 0; i < firstpage.arr_list.size(); i++) {
+               add(firstpage.arr_list.get(i));
 
             }
+
         }
 
 
@@ -190,10 +204,14 @@ public class firstpage extends ActionBarActivity {
         public View getView(final int position, final View convertView, final ViewGroup parent) {
             View view = convertView;
             if (view == null) {
-                view = LayoutInflater.from(mContext).inflate(R.layout.list_row_dynamiclistview, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.list_row_dynamiclistview,parent,false);
             }
-
-            ((TextView) view.findViewById(R.id.list_row_draganddrop_textview)).setText(getItem(position));
+            TextView txtDetail = (TextView) view.findViewById(R.id.list_row_draganddrop_textview);
+            TextView txtUri = (TextView) view.findViewById(R.id.list_row_id);
+           // txtPosition.setPadding(10, 0, 0, 0);
+            txtDetail.setText(getItem(position));
+            txtUri.setText(Uri.get(position));
+            //((TextView) view.findViewById(R.id.list_row_draganddrop_textview)).setText(getItem(position));
 
             return view;
         }
@@ -261,6 +279,7 @@ public class firstpage extends ActionBarActivity {
         mDb.close();
         arr_list.remove(position);
         arr_list_id.remove(position);
+        img_uri.remove(position);
     }
 
 }

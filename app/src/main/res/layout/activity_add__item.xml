@@ -115,10 +115,10 @@
                     android:id="@+id/text_Date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Click to select Date"
                     android:layout_weight="0.1"
                     android:layout_marginLeft="32dp"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    android:hint="Click to select Date" />
 
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="45dp"

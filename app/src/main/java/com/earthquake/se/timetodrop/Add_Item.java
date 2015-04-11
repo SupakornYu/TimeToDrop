@@ -226,15 +226,24 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                     mDatePicker.show(getSupportFragmentManager(), "datePicker");
         }else if(v.equals(saveBtn)) {
                 String foodName = ItemName.getText().toString();
-                if(foodName.length() != 0) {
-                    Cursor mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2
-                            + " WHERE " + FoodDb.COL_Item_Detail + "='" + foodName + "';"
-                            , null);
-                    if (mCursor.getCount() == 0) {
+                String expireDate = mTextDate.getText().toString();
+                if (foodName.length() == 0){
+                    foodName = " ";
+
+                }
+                else {
+                    foodName = ItemName.getText().toString();
+
+                }
+                if(expireDate.length() != 0) {
+                    /*Cursor mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2
+                            + " WHERE " + FoodDb.COL_Expire_date + "='" + expireDate + "';"
+                            , null);*/
+                    //if (mCursor.getCount() == 0) {
                         mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME2 + " ("
-                                + FoodDb.COL_Item_Detail + ") VALUES ('" + foodName
-                                + "');");
-                    }
+                                + FoodDb.COL_Item_Detail +","+FoodDb.COL_Expire_date+ ") VALUES ('" + foodName
+                                + "','"+expireDate+"');");
+                    //}
 
 
                     ItemName.setText("");
@@ -243,7 +252,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                     onBackPressed();
 
                 } else {
-                    Toast.makeText(getApplicationContext(),"Please Input Item Name",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Please Expire Date",Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -267,7 +276,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             os.write(data);
             os.flush();
             os.close();
-            Toast.makeText(getApplicationContext(), imageFileName, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), uri.getPath(), Toast.LENGTH_SHORT).show();
             photoBtn.setVisibility(View.INVISIBLE);
             RetakeBtn.setVisibility(View.VISIBLE);
         } catch (FileNotFoundException e) {
