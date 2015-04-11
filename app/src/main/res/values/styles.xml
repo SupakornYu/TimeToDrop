@@ -7,8 +7,8 @@
     </style>
     <style name="MyActionBar"
         parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:icon">@drawable/logoactionbar</item>
-        <item name="logo">@drawable/logoactionbar</item>
+       <!-- <item name="android:icon">@drawable/logoactionbar</item>
+        <item name="logo">@drawable/logoactionbar</item>-->
         <item name="displayOptions">useLogo|showHome</item>
     </style>
 

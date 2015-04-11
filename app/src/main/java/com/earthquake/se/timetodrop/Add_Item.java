@@ -2,6 +2,8 @@ package com.earthquake.se.timetodrop;
 
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.net.Uri;
@@ -36,7 +38,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import android.widget.ArrayAdapter;
-import com.fourmob.datetimepicker.date.DatePickerDialog;import java.text.DateFormat;
+import com.fourmob.datetimepicker.date.DatePickerDialog;
+
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -56,8 +62,13 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     private static ImageButton photoBtn;
     private static ImageButton RetakeBtn;
     private Button mDateButton;
+    private Button saveBtn;
     private Calendar mCalendar;
     private TextView mTextDate;
+    private TextView ItemName;
+
+    FoodDb mHelper;
+    SQLiteDatabase mDb;
 
 
     @Override
@@ -69,6 +80,8 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(FlatUI.getActionBarDrawable(this, FlatUI.GRASS, false));
         setContentView(R.layout.activity_add__item);
+        mHelper = new FoodDb(this);
+        mDb = mHelper.getWritableDatabase();
         initialWidget();
         surfaceHolder = mSurfaceView.getHolder();
         surfaceHolder.addCallback(this);
@@ -76,6 +89,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
         photoBtn.setOnClickListener(this);
         RetakeBtn.setOnClickListener(this);
+        saveBtn.setOnClickListener(this);
         mDateButton.setOnClickListener(this);
         timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         mDatePicker = DatePickerDialog.newInstance(onDateSetListener,
@@ -85,7 +99,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 false);
 
         ////////buttoncode////////////////////
-        mCircularButtonSimple = (CircularProgressButton)
+    /*    mCircularButtonSimple = (CircularProgressButton)
                 findViewById(R.id.circular_button_simple);
 
         mCircularButtonSimple.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +113,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                     mCircularButtonSimple.setProgress(100);
                 }
             }
-        });
+        });*/
 
 
 
@@ -118,7 +132,8 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         mDateButton = (Button) findViewById(R.id.button_date);
         mTextDate = (TextView) findViewById(R.id.text_Date);
         mCalendar = Calendar.getInstance();
-        
+        ItemName = (TextView) findViewById(R.id.Item_name);
+        saveBtn = (Button) findViewById(R.id.saveBtn);
 
     }
     @Override
@@ -207,9 +222,31 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 RetakeBtn.setVisibility(View.INVISIBLE);
                 mCamera.startPreview();
              }  else if(v.equals(mDateButton)) {
-                 mDatePicker.setYearRange(2000, 2020);
-                 mDatePicker.show(getSupportFragmentManager(), "datePicker");
-        }
+                    mDatePicker.setYearRange(2000, 2020);
+                    mDatePicker.show(getSupportFragmentManager(), "datePicker");
+        }else if(v.equals(saveBtn)) {
+                String foodName = ItemName.getText().toString();
+                if(foodName.length() != 0) {
+                    Cursor mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2
+                            + " WHERE " + FoodDb.COL_Item_Detail + "='" + foodName + "';"
+                            , null);
+                    if (mCursor.getCount() == 0) {
+                        mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME2 + " ("
+                                + FoodDb.COL_Item_Detail + ") VALUES ('" + foodName
+                                + "');");
+                    }
+
+
+                    ItemName.setText("");
+
+                    Toast.makeText(getApplicationContext(), "Finish!!!", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+
+                } else {
+                    Toast.makeText(getApplicationContext(),"Please Input Item Name",Toast.LENGTH_SHORT).show();
+
+                }
+            }
 
     }
 

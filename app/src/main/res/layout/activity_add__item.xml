@@ -80,7 +80,7 @@
 
 
                 <com.cengalabs.flatui.views.FlatEditText
-                    android:id="@+id/edittext_box"
+                    android:id="@+id/Item_name"
                     android:layout_width="156dp"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
@@ -89,7 +89,8 @@
                     flatui:fl_fieldStyle="box"
                     flatui:fl_theme="@array/sea"
                     android:layout_marginLeft="32dp"
-                    android:layout_weight="0.18" />
+                    android:layout_weight="0.18"
+                    android:singleLine="true" />
 
              </LinearLayout>
 
@@ -304,7 +305,7 @@
                 android:layout_marginTop="70dp"
                 android:gravity="center_horizontal">
 
-                <com.dd.CircularProgressButton
+              <!--  <com.dd.CircularProgressButton
                     android:id="@+id/circular_button_simple"
                     android:layout_width="196dp"
                     android:layout_height="64dp"
@@ -313,9 +314,16 @@
                     android:textSize="18sp"
                     app:cpb_textComplete="@string/complete"
                     app:cpb_textError="@string/error"
-                    app:cpb_textIdle="@string/upload" />
-                     />
+                    app:cpb_textIdle="@string/upload" />-->
 
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/saveBtn"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    flatui:fl_theme="@array/orange"
+                    android:text="Save" />
             </LinearLayout>
 
             <LinearLayout

@@ -1,5 +1,6 @@
 package com.earthquake.se.timetodrop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -147,9 +148,9 @@ public class firstpage extends ActionBarActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_new:
-                Intent i = new Intent(getApplicationContext(), AddNew_Item.class);
+                Intent i = new Intent(getApplicationContext(), Add_Item.class);
                 startActivity(i);
-                overridePendingTransition(R.animator.animation1,R.animator.animation2);
+                //overridePendingTransition(R.animator.animation1,R.animator.animation2);
                 break;
 
 
