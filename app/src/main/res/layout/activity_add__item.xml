@@ -1,123 +1,342 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     tools:context="com.earthquake.se.timetodrop.Add_Item">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#44609c"
+        android:background="#ffffffff"
         android:baselineAligned="true"
-        android:gravity="center_vertical">
+        android:weightSum="1">
 
-        <SurfaceView
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/cameraView"
-            android:layout_marginTop="20dp" />
-
-
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_photo"
-                android:id="@+id/photoBtn"
-                android:layout_gravity="center_horizontal"
-                android:background="#ff56879c"
-                android:layout_marginTop="10dp" />
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_refresh"
-                android:id="@+id/RePhotoBtn"
-                android:layout_gravity="center_horizontal"
-                android:background="#ff56879c"
-                android:layout_marginTop="10dp" />
-
-
-
-        </FrameLayout>
         <LinearLayout
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ff44609c"
-            android:clickable="false"
-            android:gravity="center">
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-            <TextView
-                android:id="@+id/editText1"
-                android:layout_width="0dp"
+            <SurfaceView
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/cameraView"
+                android:layout_marginTop="20dp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Item Name"
-                android:layout_weight="1.8"
-                android:gravity="center"/>
-            <EditText
-                android:id="@+id/text_FoodName"
-                android:layout_width="0dp"
+                android:layout_gravity="center_horizontal">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_action_photo"
+                    android:id="@+id/photoBtn"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#ff56879c"
+                    android:layout_marginTop="10dp"
+                    android:clickable="false" />
+
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_action_refresh"
+                    android:id="@+id/RePhotoBtn"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:background="#ff56879c"
+                    android:layout_marginTop="10dp"
+                    android:scaleType="fitStart"
+                    android:nestedScrollingEnabled="false"
+                    android:clickable="false" />
+
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="input heres"
-                android:layout_weight="2"
-                android:singleLine="true" />
+                android:background="#ffffffff"
+                android:clickable="false"
+                android:weightSum="1"
+                android:gravity="left"
+                android:layout_gravity="center_horizontal">
 
 
 
+                <TextView
+                    android:id="@+id/editText1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Item Name :"
+                    android:layout_marginLeft="40dp" />
+
+
+                <com.cengalabs.flatui.views.FlatEditText
+                    android:id="@+id/Item_name"
+                    android:layout_width="156dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:hint="Input here"
+                    android:includeFontPadding="true"
+                    flatui:fl_fieldStyle="box"
+                    flatui:fl_theme="@array/sea"
+                    android:layout_marginLeft="32dp"
+                    android:layout_weight="0.18"
+                    android:singleLine="true" />
+
+             </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffffff"
+                android:clickable="false"
+                android:weightSum="1"
+                android:layout_weight="0.17"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/editText3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Expire date :"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="5dp" />
+                <TextView
+                    android:id="@+id/text_Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Click to select Date"
+                    android:layout_weight="0.1"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="5dp" />
+
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="45dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/button_date"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    flatui:fl_theme="@array/deep"
+                    android:text="..."
+                    android:layout_marginTop="5dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffffff"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.56"
+                android:layout_gravity="center_horizontal|bottom">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Notification Before expire :"
+                    android:id="@+id/textView"
+                    android:layout_marginLeft="40dp"
+                    android:background="#ffffffff" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp">
+
+
+
+
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:id="@+id/one"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="40dp"
+                    android:text="1"
+                    flatui:fl_theme="@array/sea"
+                    android:textSize="30dp" />
+
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:id="@+id/two"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="2"
+                    flatui:fl_theme="@array/sea"
+                    android:textSize="30dp"/>
+
+
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:id="@+id/three"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="3"
+                    flatui:fl_theme="@array/sea"
+                    android:textSize="30dp"/>
+
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:id="@+id/four"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="4"
+                    flatui:fl_theme="@array/sea"
+                    android:textSize="30dp"/>
+
+
+
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:id="@+id/five"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="5"
+                    flatui:fl_theme="@array/sea"
+                    android:textSize="30dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Tag color :"
+                    android:id="@+id/textView4"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal">
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+
+                    android:id="@+id/grape"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="50dp"
+                    flatui:fl_theme="@array/grape"/>
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+
+                    android:id="@+id/sky"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    flatui:fl_theme="@array/sky"/>
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/blue"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    flatui:fl_theme="@array/sea"/>
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+
+                    android:id="@+id/green"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    flatui:fl_theme="@array/grass"/>
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+
+                    android:id="@+id/yellow"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    flatui:fl_theme="@array/sand"/>
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+
+                    android:id="@+id/orange"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    flatui:fl_theme="@array/orange"/>
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+
+                    android:id="@+id/red"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    flatui:fl_theme="@array/candy"/>
+
+                </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="70dp"
+                android:gravity="center_horizontal">
+
+              <!--  <com.dd.CircularProgressButton
+                    android:id="@+id/circular_button_simple"
+                    android:layout_width="196dp"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:cpb_textComplete="@string/complete"
+                    app:cpb_textError="@string/error"
+                    app:cpb_textIdle="@string/upload" />-->
+
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/saveBtn"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    flatui:fl_theme="@array/orange"
+                    android:text="Save" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="200dp">
+
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#44609c"
-            android:clickable="false"
-            android:gravity="center">
 
-            <TextView
-                android:id="@+id/editText3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Expire date"
-                android:layout_weight="2.5"
-                android:gravity="center" />
-            <TextView
-                android:id="@+id/text_Date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Click to select Date"
-                android:layout_weight="2"
-                android:gravity="center"/>
-            <Button
-                android:id="@+id/button_date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="..."
-                android:layout_weight="0.5"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="0dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"></LinearLayout>
-
-
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </ScrollView>

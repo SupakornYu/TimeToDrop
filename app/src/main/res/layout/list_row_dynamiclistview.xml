@@ -32,12 +32,26 @@
 
     <TextView
         android:id="@+id/list_row_draganddrop_textview"
-        android:layout_width="match_parent"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:gravity="center_vertical"
         android:minHeight="48dp"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="20sp"
-        tools:ignore="UnusedAttribute" />
+        tools:ignore="UnusedAttribute"
+        android:layout_weight="0.15" />
+    <TextView
+        android:id="@+id/list_row_id"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="20sp"
+        tools:ignore="UnusedAttribute"
+        android:layout_weight="0.15" />
+
+
 </LinearLayout>

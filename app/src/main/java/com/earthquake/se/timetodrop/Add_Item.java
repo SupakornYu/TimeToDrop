@@ -2,10 +2,15 @@ package com.earthquake.se.timetodrop;
 
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,17 +24,27 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cengalabs.flatui.FlatUI;
+import com.dd.CircularProgressButton;
+import com.fourmob.datetimepicker.date.DatePickerDialog;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import android.widget.ArrayAdapter;
-import com.fourmob.datetimepicker.date.DatePickerDialog;import java.text.DateFormat;
+import com.fourmob.datetimepicker.date.DatePickerDialog;
+
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 
@@ -37,6 +52,9 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         , Camera.PictureCallback, Camera.ShutterCallback {
     Camera mCamera;
     private DatePickerDialog mDatePicker;
+    CircularProgressButton mCircularButtonSimple;
+    CircularProgressButton mCircularButtonComplete;
+    CircularProgressButton mCircularButtonError;
     SurfaceView mSurfaceView;
     SurfaceHolder surfaceHolder;
     boolean saveState = false;
@@ -44,20 +62,34 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     private static ImageButton photoBtn;
     private static ImageButton RetakeBtn;
     private Button mDateButton;
+    private Button saveBtn;
     private Calendar mCalendar;
     private TextView mTextDate;
+    private TextView ItemName;
+
+    FoodDb mHelper;
+    SQLiteDatabase mDb;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //flatUI
+        FlatUI.initDefaultValues(this);
+        FlatUI.setDefaultTheme(FlatUI.SEA);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(FlatUI.getActionBarDrawable(this, FlatUI.GRASS, false));
         setContentView(R.layout.activity_add__item);
+        mHelper = new FoodDb(this);
+        mDb = mHelper.getWritableDatabase();
         initialWidget();
         surfaceHolder = mSurfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
         photoBtn.setOnClickListener(this);
         RetakeBtn.setOnClickListener(this);
+        saveBtn.setOnClickListener(this);
         mDateButton.setOnClickListener(this);
         timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         mDatePicker = DatePickerDialog.newInstance(onDateSetListener,
@@ -66,7 +98,33 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 mCalendar.get(Calendar.DAY_OF_MONTH),// วัน (1-31)
                 false);
 
+        ////////buttoncode////////////////////
+    /*    mCircularButtonSimple = (CircularProgressButton)
+                findViewById(R.id.circular_button_simple);
+
+        mCircularButtonSimple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCircularButtonSimple.getProgress() == 0) {
+                    mCircularButtonSimple.setProgress(50);
+                } else if (mCircularButtonSimple.getProgress() == 100) {
+                    mCircularButtonSimple.setProgress(0);
+                } else {
+                    mCircularButtonSimple.setProgress(100);
+                }
+            }
+        });*/
+
+
+
+
+
+
     }
+
+
+
+
     private void initialWidget() {
         mSurfaceView = (SurfaceView) findViewById(R.id.cameraView);
         photoBtn = (ImageButton) findViewById(R.id.photoBtn);
@@ -74,13 +132,21 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         mDateButton = (Button) findViewById(R.id.button_date);
         mTextDate = (TextView) findViewById(R.id.text_Date);
         mCalendar = Calendar.getInstance();
-        
+        ItemName = (TextView) findViewById(R.id.Item_name);
+        saveBtn = (Button) findViewById(R.id.saveBtn);
 
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_add__item, menu);
+        return true;
+    }
+
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item= menu.findItem(R.id.action_settings);
+        item.setVisible(false);
+        super.onPrepareOptionsMenu(menu);
         return true;
     }
 
@@ -156,9 +222,31 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 RetakeBtn.setVisibility(View.INVISIBLE);
                 mCamera.startPreview();
              }  else if(v.equals(mDateButton)) {
-                 mDatePicker.setYearRange(2000, 2020);
-                 mDatePicker.show(getSupportFragmentManager(), "datePicker");
-        }
+                    mDatePicker.setYearRange(2000, 2020);
+                    mDatePicker.show(getSupportFragmentManager(), "datePicker");
+        }else if(v.equals(saveBtn)) {
+                String foodName = ItemName.getText().toString();
+                if(foodName.length() != 0) {
+                    Cursor mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2
+                            + " WHERE " + FoodDb.COL_Item_Detail + "='" + foodName + "';"
+                            , null);
+                    if (mCursor.getCount() == 0) {
+                        mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME2 + " ("
+                                + FoodDb.COL_Item_Detail + ") VALUES ('" + foodName
+                                + "');");
+                    }
+
+
+                    ItemName.setText("");
+
+                    Toast.makeText(getApplicationContext(), "Finish!!!", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+
+                } else {
+                    Toast.makeText(getApplicationContext(),"Please Input Item Name",Toast.LENGTH_SHORT).show();
+
+                }
+            }
 
     }
 

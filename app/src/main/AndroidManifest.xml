@@ -23,15 +23,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
-
         </activity>
         <activity
             android:name=".AddNew_Item"
             android:label="@string/title_activity_add_new__item"
             android:screenOrientation="portrait" >
-
         </activity>
         <activity
             android:name=".ViewDB"
@@ -41,14 +37,13 @@
         <activity
             android:name=".Add_Item"
             android:label="@string/title_activity_add__item"
+            android:parentActivityName=".firstpage"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.earthquake.se.timetodrop.firstpage"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_firstpage" >
-
         </activity>
 
     </application>
