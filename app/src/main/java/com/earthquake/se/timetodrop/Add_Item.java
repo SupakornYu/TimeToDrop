@@ -66,6 +66,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     private Calendar mCalendar;
     private TextView mTextDate;
     private TextView ItemName;
+    private  Uri imgUri;
 
     FoodDb mHelper;
     SQLiteDatabase mDb;
@@ -235,14 +236,15 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                     foodName = ItemName.getText().toString();
 
                 }
-                if(expireDate.length() != 0) {
+                if(expireDate.length() != 0 && imgUri != null) {
                     /*Cursor mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2
                             + " WHERE " + FoodDb.COL_Expire_date + "='" + expireDate + "';"
                             , null);*/
                     //if (mCursor.getCount() == 0) {
                         mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME2 + " ("
-                                + FoodDb.COL_Item_Detail +","+FoodDb.COL_Expire_date+ ") VALUES ('" + foodName
-                                + "','"+expireDate+"');");
+                            + FoodDb.COL_Item_Detail +","+FoodDb.COL_Expire_date+ ") VALUES ('" + imgUri
+                            + "','"+expireDate+"');");
+
                     //}
 
 
@@ -267,16 +269,16 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     File imgFolder = new File(Environment.getExternalStorageDirectory(), "DCIM/TTD");
     imgFolder.mkdirs();
     File output = new File(imgFolder, imageFileName);
-    Uri uri = Uri.fromFile(output);
-    imgIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+    imgUri = Uri.fromFile(output);
+    imgIntent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
 
     OutputStream os;
         try {
-            os = getContentResolver().openOutputStream(uri);
+            os = getContentResolver().openOutputStream(imgUri);
             os.write(data);
             os.flush();
             os.close();
-            Toast.makeText(getApplicationContext(), uri.getPath(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), imgUri.getPath(), Toast.LENGTH_SHORT).show();
             photoBtn.setVisibility(View.INVISIBLE);
             RetakeBtn.setVisibility(View.VISIBLE);
         } catch (FileNotFoundException e) {

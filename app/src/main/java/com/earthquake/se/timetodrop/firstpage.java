@@ -1,10 +1,14 @@
 package com.earthquake.se.timetodrop;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,8 +37,10 @@ import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCa
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.SimpleSwipeUndoAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.UndoAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
+import com.squareup.picasso.Picasso;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -45,14 +52,22 @@ public class firstpage extends ActionBarActivity {
     Cursor mCursor;
     DynamicListView listFood;
     static ArrayList<String> arr_list = new ArrayList<String>();
-    static ArrayList<String> img_uri = new ArrayList<String>();
+    static ArrayList<String> exp_date = new ArrayList<String>();
     static ArrayList<Integer> arr_list_id = new ArrayList<Integer>();
+    static ArrayList<String> img_uri = new ArrayList<String>();
     ArrayAdapter<String> adapterDir;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firstpage);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
+        manageDb();
+
+
+
+    }
+
+    private void manageDb() {
         mHelper = new FoodDb(this);
         mDb = mHelper.getReadableDatabase();
         mDb = mHelper.getWritableDatabase();
@@ -61,8 +76,10 @@ public class firstpage extends ActionBarActivity {
         clearArray();
         while (!mCursor.isAfterLast()) {
             int id = mCursor.getInt(0);
-            arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
-            img_uri.add("URI : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Expire_date)));
+
+            arr_list.add("Detail : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
+            exp_date.add("Expire Date : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Expire_date)));
+            img_uri.add(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
             arr_list_id.add(id);
 
             mCursor.moveToNext();
@@ -72,7 +89,7 @@ public class firstpage extends ActionBarActivity {
 
 
         listFood = (DynamicListView) findViewById(R.id.listFood);
-        adapterDir = new MyListAdapter(this,arr_list,img_uri);
+        adapterDir = new MyListAdapter(this,arr_list,exp_date,img_uri);
         SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapterDir, this, new MyOnDismissCallback(adapterDir));
         AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
         animAdapter.setAbsListView(listFood);
@@ -80,14 +97,12 @@ public class firstpage extends ActionBarActivity {
         animAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
         listFood.setAdapter(animAdapter);
         listFood.enableSimpleSwipeUndo();
-
-
-
     }
 
     public void clearArray(){
         arr_list.clear();
         arr_list_id.clear();
+        exp_date.clear();
         img_uri.clear();
 
 
@@ -98,35 +113,9 @@ public class firstpage extends ActionBarActivity {
         mDb.close();
 
     }
-    public void onResume(){
+ public void onResume(){
         super.onResume();
-        mHelper = new FoodDb(this);
-        mDb = mHelper.getReadableDatabase();
-        mDb = mHelper.getWritableDatabase();
-        mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2, null);
-        mCursor.moveToFirst();
-        clearArray();
-        while (!mCursor.isAfterLast()) {
-            int id = mCursor.getInt(0);
-            arr_list.add("Name : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
-            img_uri.add("URI : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Expire_date)));
-            arr_list_id.add(id);
-
-            mCursor.moveToNext();
-
-        }
-
-
-
-        listFood = (DynamicListView) findViewById(R.id.listFood);
-        adapterDir = new MyListAdapter(this,arr_list,img_uri);
-        SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapterDir, this, new MyOnDismissCallback(adapterDir));
-        AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
-        animAdapter.setAbsListView(listFood);
-        assert animAdapter.getViewAnimator() != null;
-        animAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
-        listFood.setAdapter(animAdapter);
-        listFood.enableSimpleSwipeUndo();
+        manageDb();
 
 
     }
@@ -172,16 +161,17 @@ public class firstpage extends ActionBarActivity {
 
     }
 
-    private static class MyListAdapter extends ArrayAdapter<String> implements UndoAdapter {
+    private class MyListAdapter extends ArrayAdapter<String> implements UndoAdapter {
 
         private final Context mContext;
      ArrayList<String> Detail= new ArrayList<String>();
-        ArrayList<String> Uri= new ArrayList<String>();
-
-        MyListAdapter(final Context context, ArrayList<String> arr_list, ArrayList<String> img_uri) {
+        ArrayList<String> imgUri= new ArrayList<String>();
+        ArrayList<String> expDate= new ArrayList<String>();
+        MyListAdapter(final Context context, ArrayList<String> arr_list, ArrayList<String> exp_date, ArrayList<String> img_uri) {
             mContext = context;
             Detail = arr_list;
-            Uri = img_uri;
+            expDate = exp_date;
+            imgUri=img_uri;
             for (int i = 0; i < firstpage.arr_list.size(); i++) {
                add(firstpage.arr_list.get(i));
 
@@ -207,10 +197,22 @@ public class firstpage extends ActionBarActivity {
                 view = LayoutInflater.from(mContext).inflate(R.layout.list_row_dynamiclistview,parent,false);
             }
             TextView txtDetail = (TextView) view.findViewById(R.id.list_row_draganddrop_textview);
-            TextView txtUri = (TextView) view.findViewById(R.id.list_row_id);
-           // txtPosition.setPadding(10, 0, 0, 0);
-            txtDetail.setText(getItem(position));
-            txtUri.setText(Uri.get(position));
+            TextView txtDate = (TextView) view.findViewById(R.id.expDate);
+            ImageView imageView = (ImageView) view.findViewById(R.id.list_imgView);
+
+            // txtPosition.setPadding(10, 0, 0, 0);
+            txtDetail.setText(arr_list.get(position));
+            txtDate.setText(expDate.get(position));
+            // set picasso
+            int radius = 30;
+            int stroke = 5;
+            int margin = 5;
+            int width = 400;
+            int height = 400;
+           // String imageUri = "file:///storage/emulated/0/DCIM/TTD/IMG_20150417_170436.jpg";
+            Picasso.with(getApplicationContext()).load(img_uri.get(position)).resize(width, height)
+                   // .transform(new RoundedRectTransformation(radius, stroke, margin))
+                    .into(imageView);
             //((TextView) view.findViewById(R.id.list_row_draganddrop_textview)).setText(getItem(position));
 
             return view;
@@ -279,7 +281,7 @@ public class firstpage extends ActionBarActivity {
         mDb.close();
         arr_list.remove(position);
         arr_list_id.remove(position);
-        img_uri.remove(position);
+        exp_date.remove(position);
     }
 
 }
