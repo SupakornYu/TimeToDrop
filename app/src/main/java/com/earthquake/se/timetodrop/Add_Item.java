@@ -55,6 +55,8 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     private Button mDateButton;
     private Calendar mCalendar;
     private TextView mTextDate;
+    private  Uri imgUri;
+
 
 
     @Override
