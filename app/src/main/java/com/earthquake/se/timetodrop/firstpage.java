@@ -76,10 +76,13 @@ public class firstpage extends ActionBarActivity {
         clearArray();
         while (!mCursor.isAfterLast()) {
             int id = mCursor.getInt(0);
-
+            int imgID = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_P_id)));
+            String imgPath =  getImgPath(imgID);
             arr_list.add("Detail : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
             exp_date.add("Expire Date : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Expire_date)));
-            img_uri.add(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
+            //img_uri.add(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_P_id)));
+
+            img_uri.add(imgPath);
             arr_list_id.add(id);
 
             mCursor.moveToNext();
@@ -97,6 +100,23 @@ public class firstpage extends ActionBarActivity {
         animAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
         listFood.setAdapter(animAdapter);
         listFood.enableSimpleSwipeUndo();
+    }
+
+    private String getImgPath(int imgID) {
+        String picPath = null;
+        Cursor mCursor2;
+        mHelper = new FoodDb(this);
+        mDb = mHelper.getReadableDatabase();
+        mDb = mHelper.getWritableDatabase();
+        //String MY_QUERY = "SELECT "+mHelper.COL_Path+ " FROM " + FoodDb.TABLE_NAME3 + "WHERE"+mHelper.COLP_Photo_tag_id+"LIKE"+imgID;
+        mCursor2 = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME3 +" WHERE "+mHelper.COLP_Photo_tag_id+" LIKE '"+imgID+"'" , null);
+        mCursor2.moveToFirst();
+            picPath = mCursor2.getString(2) ;
+        mCursor2.close();
+
+        return picPath;
+
+
     }
 
     public void clearArray(){
@@ -201,7 +221,7 @@ public class firstpage extends ActionBarActivity {
             ImageView imageView = (ImageView) view.findViewById(R.id.list_imgView);
 
             // txtPosition.setPadding(10, 0, 0, 0);
-            txtDetail.setText(arr_list.get(position));
+            txtDetail.setText(Detail.get(position));
             txtDate.setText(expDate.get(position));
             // set picasso
             int radius = 30;
@@ -210,8 +230,9 @@ public class firstpage extends ActionBarActivity {
             int width = 400;
             int height = 400;
            // String imageUri = "file:///storage/emulated/0/DCIM/TTD/IMG_20150417_170436.jpg";
-            Picasso.with(getApplicationContext()).load(img_uri.get(position)).resize(width, height)
-                   // .transform(new RoundedRectTransformation(radius, stroke, margin))
+            Picasso.with(getApplicationContext()).load(imgUri.get(position)).resize(width, height)
+                    // .transform(new RoundedRectTransformation(radius, stroke, margin))
+
                     .into(imageView);
             //((TextView) view.findViewById(R.id.list_row_draganddrop_textview)).setText(getItem(position));
 

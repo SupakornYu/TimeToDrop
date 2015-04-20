@@ -237,20 +237,25 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
 
                 }
                 if(expireDate.length() != 0 && imgUri != null) {
+                    mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME3 + " ("
+                            + FoodDb.COL_Path + ") VALUES ('" + imgUri
+                            + "');");
+                    int photoId = getLastID();
+
                     /*Cursor mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2
                             + " WHERE " + FoodDb.COL_Expire_date + "='" + expireDate + "';"
                             , null);*/
                     //if (mCursor.getCount() == 0) {
                         mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME2 + " ("
-                            + FoodDb.COL_Item_Detail +","+FoodDb.COL_Expire_date+ ") VALUES ('" + imgUri
-                            + "','"+expireDate+"');");
+                            + FoodDb.COL_Item_Detail +","+FoodDb.COL_Expire_date+ ","+FoodDb.COL_P_id+") VALUES ('" + foodName
+                            + "','"+expireDate+"','"+photoId+"');");
 
                     //}
 
 
                     ItemName.setText("");
-
-                    Toast.makeText(getApplicationContext(), "Finish!!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Finish!!!   "+photoId, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Finish!!!", Toast.LENGTH_SHORT).show();
                     onBackPressed();
 
                 } else {
@@ -294,6 +299,14 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
 
     }
 
+    public int getLastID() {
+        final String MY_QUERY = "SELECT MAX("+mHelper.COLP_Photo_tag_id+") FROM " + FoodDb.TABLE_NAME3;
+        Cursor cur = mDb.rawQuery(MY_QUERY, null);
+        cur.moveToFirst();
+        int ID = cur.getInt(0);
+        cur.close();
+        return ID;
+    }
 
     public void refreshCamera() {
         if (surfaceHolder.getSurface() == null) {
