@@ -1,12 +1,15 @@
 package com.earthquake.se.timetodrop;
 
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
+import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cengalabs.flatui.FlatUI;
+import com.cengalabs.flatui.views.FlatButton;
 import com.dd.CircularProgressButton;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 
@@ -61,15 +65,30 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     private String timeStamp;
     private static ImageButton photoBtn;
     private static ImageButton RetakeBtn;
+
     private Button mDateButton;
     private Button saveBtn;
+    private FlatButton one;
+    private FlatButton two;
+    private FlatButton three;
+    private FlatButton four;
+    private FlatButton five;
+    private FlatButton sky;
+    private FlatButton grape;
+    private FlatButton blue;
+    private FlatButton green;
+    private FlatButton yellow;
+    private FlatButton orange;
+    private FlatButton red;
     private Calendar mCalendar;
     private TextView mTextDate;
     private TextView ItemName;
     private  Uri imgUri;
-
+    private int before_expired_day;
     FoodDb mHelper;
     SQLiteDatabase mDb;
+
+
 
 
     @Override
@@ -79,7 +98,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         FlatUI.initDefaultValues(this);
         FlatUI.setDefaultTheme(FlatUI.SEA);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(FlatUI.getActionBarDrawable(this, FlatUI.GRASS, false));
+        actionBar.setBackgroundDrawable(FlatUI.getActionBarDrawable(this, FlatUI.BLOSSOM, false));
         setContentView(R.layout.activity_add__item);
         mHelper = new FoodDb(this);
         mDb = mHelper.getWritableDatabase();
@@ -88,6 +107,19 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
+
+        sky.setOnClickListener(this);
+        red.setOnClickListener(this);
+        yellow.setOnClickListener(this);
+        blue.setOnClickListener(this);
+        orange.setOnClickListener(this);
+        grape.setOnClickListener(this);
+        green.setOnClickListener(this);
+        one.setOnClickListener(this);
+        two.setOnClickListener(this);
+        three.setOnClickListener(this);
+        four.setOnClickListener(this);
+        five.setOnClickListener(this);
         photoBtn.setOnClickListener(this);
         RetakeBtn.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
@@ -135,7 +167,18 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         mCalendar = Calendar.getInstance();
         ItemName = (TextView) findViewById(R.id.Item_name);
         saveBtn = (Button) findViewById(R.id.saveBtn);
-
+        one = (FlatButton) findViewById(R.id.one);
+        two = (FlatButton) findViewById(R.id.two);
+        three = (FlatButton) findViewById(R.id.three);
+        four = (FlatButton) findViewById(R.id.four);
+        five = (FlatButton) findViewById(R.id.five);
+        sky = (FlatButton) findViewById(R.id.sky);
+        blue = (FlatButton) findViewById(R.id.blue);
+        green = (FlatButton) findViewById(R.id.green);
+        red = (FlatButton) findViewById(R.id.red);
+        grape = (FlatButton) findViewById(R.id.grape);
+        orange = (FlatButton) findViewById(R.id.orange);
+        yellow = (FlatButton) findViewById(R.id.yellow);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -212,19 +255,115 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         mCamera = null;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
 
-            if(v.equals(photoBtn)) {
+
+        if(v.equals(photoBtn)) {
                 saveState = true;
                 mCamera.takePicture(null, null, Add_Item.this);
-            }else if(v.equals(RetakeBtn)){
+        }else if(v.equals(RetakeBtn)){
                 photoBtn.setVisibility(View.VISIBLE);
                 RetakeBtn.setVisibility(View.INVISIBLE);
                 mCamera.startPreview();
-             }  else if(v.equals(mDateButton)) {
-                    mDatePicker.setYearRange(2000, 2020);
-                    mDatePicker.show(getSupportFragmentManager(), "datePicker");
+        }  else if(v.equals(mDateButton)) {
+                mDatePicker.setYearRange(2000, 2020);
+                mDatePicker.show(getSupportFragmentManager(), "datePicker");
+            ////notification///////////////////////////
+                }else if(v.equals(one)){
+                before_expired_day = 1;
+                one.getAttributes().setTheme(FlatUI.SNOW, getResources());
+                two.getAttributes().setTheme(FlatUI.SEA, getResources());
+                three.getAttributes().setTheme(FlatUI.SEA, getResources());
+                four.getAttributes().setTheme(FlatUI.SEA, getResources());
+                five.getAttributes().setTheme(FlatUI.SEA, getResources());
+                }else if(v.equals(two)){
+                before_expired_day = 2;
+                 one.getAttributes().setTheme(FlatUI.SEA, getResources());
+                two.getAttributes().setTheme(FlatUI.SNOW, getResources());
+                three.getAttributes().setTheme(FlatUI.SEA, getResources());
+                four.getAttributes().setTheme(FlatUI.SEA, getResources());
+                five.getAttributes().setTheme(FlatUI.SEA, getResources());
+                }else if(v.equals(three)){
+                before_expired_day = 3;
+                one.getAttributes().setTheme(FlatUI.SEA, getResources());
+                two.getAttributes().setTheme(FlatUI.SEA, getResources());
+                three.getAttributes().setTheme(FlatUI.SNOW, getResources());
+                four.getAttributes().setTheme(FlatUI.SEA, getResources());
+                five.getAttributes().setTheme(FlatUI.SEA, getResources());
+                }else if(v.equals(four)){
+                before_expired_day = 4;
+                one.getAttributes().setTheme(FlatUI.SEA, getResources());
+                two.getAttributes().setTheme(FlatUI.SEA, getResources());
+                three.getAttributes().setTheme(FlatUI.SEA, getResources());
+                four.getAttributes().setTheme(FlatUI.SNOW, getResources());
+                five.getAttributes().setTheme(FlatUI.SEA, getResources());
+                }else if(v.equals(five)){
+                before_expired_day = 5;
+                one.getAttributes().setTheme(FlatUI.SEA, getResources());
+                two.getAttributes().setTheme(FlatUI.SEA, getResources());
+                three.getAttributes().setTheme(FlatUI.SEA, getResources());
+                four.getAttributes().setTheme(FlatUI.SEA, getResources());
+                five.getAttributes().setTheme(FlatUI.SNOW, getResources());
+                ////notification///////////////////////////////////
+        }else if(v.equals(sky)){
+            sky.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            red.getAttributes().setTheme(FlatUI.CANDY, getResources());
+            orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
+            yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
+            green.getAttributes().setTheme(FlatUI.GRASS, getResources());
+            grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
+            blue.getAttributes().setTheme(FlatUI.SEA, getResources());
+        }else if(v.equals(red)){
+            sky.getAttributes().setTheme(FlatUI.SKY, getResources());
+            red.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
+            yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
+            green.getAttributes().setTheme(FlatUI.GRASS, getResources());
+            grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
+            blue.getAttributes().setTheme(FlatUI.SEA, getResources());
+        }else if(v.equals(orange)){
+            sky.getAttributes().setTheme(FlatUI.SKY, getResources());
+            red.getAttributes().setTheme(FlatUI.CANDY, getResources());
+            orange.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
+            green.getAttributes().setTheme(FlatUI.GRASS, getResources());
+            grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
+            blue.getAttributes().setTheme(FlatUI.SEA, getResources());
+        }else if(v.equals(yellow)){
+            sky.getAttributes().setTheme(FlatUI.SKY, getResources());
+            red.getAttributes().setTheme(FlatUI.CANDY, getResources());
+            orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
+            yellow.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            green.getAttributes().setTheme(FlatUI.GRASS, getResources());
+            grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
+            blue.getAttributes().setTheme(FlatUI.SEA, getResources());
+        }else if(v.equals(green)){
+            sky.getAttributes().setTheme(FlatUI.SKY, getResources());
+            red.getAttributes().setTheme(FlatUI.CANDY, getResources());
+            orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
+            yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
+            green.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
+            blue.getAttributes().setTheme(FlatUI.SEA, getResources());
+        }else if(v.equals(grape)){
+            sky.getAttributes().setTheme(FlatUI.SKY, getResources());
+            red.getAttributes().setTheme(FlatUI.CANDY, getResources());
+            orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
+            yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
+            green.getAttributes().setTheme(FlatUI.GRASS, getResources());
+            grape.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            blue.getAttributes().setTheme(FlatUI.SEA, getResources());
+        }else if(v.equals(blue)){
+            sky.getAttributes().setTheme(FlatUI.SKY, getResources());
+            red.getAttributes().setTheme(FlatUI.CANDY, getResources());
+            orange.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
+            green.getAttributes().setTheme(FlatUI.GRASS, getResources());
+            grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
+            blue.getAttributes().setTheme(FlatUI.SNOW, getResources());
+
         }else if(v.equals(saveBtn)) {
                 String foodName = ItemName.getText().toString();
                 String expireDate = mTextDate.getText().toString();
@@ -247,14 +386,15 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                             , null);*/
                     //if (mCursor.getCount() == 0) {
                         mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME2 + " ("
-                            + FoodDb.COL_Item_Detail +","+FoodDb.COL_Expire_date+ ","+FoodDb.COL_P_id+") VALUES ('" + foodName
-                            + "','"+expireDate+"','"+photoId+"');");
+                            + FoodDb.COL_Item_Detail +","+FoodDb.COL_Expire_date+ ","+FoodDb.COL_P_id+","+FoodDb.COL_Warn_days+") VALUES ('" + foodName
+                            + "','"+expireDate+"','"+photoId+"','"+before_expired_day+"');");
+
 
                     //}
 
 
                     ItemName.setText("");
-                    Toast.makeText(getApplicationContext(), "Finish!!!   "+photoId, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Finish!!!   "+before_expired_day, Toast.LENGTH_SHORT).show();
                     //Toast.makeText(getApplicationContext(), "Finish!!!", Toast.LENGTH_SHORT).show();
                     onBackPressed();
 

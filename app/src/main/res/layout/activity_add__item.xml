@@ -66,8 +66,8 @@
                 android:background="#ffffffff"
                 android:clickable="false"
                 android:weightSum="1"
-                android:gravity="left"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal">
 
 
 
@@ -76,20 +76,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Item Name :"
-                    android:layout_marginLeft="40dp" />
+                    android:layout_marginRight="132dp" />
 
 
                 <com.cengalabs.flatui.views.FlatEditText
                     android:id="@+id/Item_name"
-                    android:layout_width="156dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:hint="Input here"
                     android:includeFontPadding="true"
                     flatui:fl_fieldStyle="box"
                     flatui:fl_theme="@array/sea"
-                    android:layout_marginLeft="32dp"
-                    android:layout_weight="0.18"
                     android:singleLine="true" />
 
              </LinearLayout>
@@ -102,21 +100,21 @@
                 android:clickable="false"
                 android:weightSum="1"
                 android:layout_weight="0.17"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/editText3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Expire date :"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="35dp" />
                 <TextView
                     android:id="@+id/text_Date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:layout_marginLeft="32dp"
                     android:layout_marginTop="5dp"
                     android:hint="Click to select Date" />
 
@@ -127,7 +125,8 @@
                     flatui:fl_blockButtonEffectHeight="3dp"
                     flatui:fl_theme="@array/deep"
                     android:text="..."
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="20dp" />
 
 
             </LinearLayout>
@@ -135,11 +134,12 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="#ffffffff"
                 android:layout_marginTop="10dp"
                 android:layout_weight="0.56"
-                android:layout_gravity="center_horizontal|bottom">
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal">
 
 
                 <TextView
@@ -148,29 +148,29 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Notification Before expire :"
                     android:id="@+id/textView"
-                    android:layout_marginLeft="40dp"
-                    android:background="#ffffffff" />
+                    android:background="#ffffffff"
+                    android:layout_marginRight="130dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal">
 
 
 
 
                 <com.cengalabs.flatui.views.FlatButton
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:id="@+id/one"
-                    flatui:fl_blockButtonEffectHeight="3dp"
-                    android:layout_marginLeft="40dp"
-                    android:text="1"
-                    flatui:fl_theme="@array/sea"
-                    android:textSize="30dp" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:id="@+id/one"
+                flatui:fl_blockButtonEffectHeight="3dp"
+                android:text="1"
+                flatui:fl_theme="@array/sea"
+                android:textSize="30dp" />
+
 
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="55dp"
@@ -180,7 +180,10 @@
                     android:layout_marginLeft="5dp"
                     android:text="2"
                     flatui:fl_theme="@array/sea"
-                    android:textSize="30dp"/>
+
+
+                    android:textSize="30dp"
+                    android:elegantTextHeight="false" />
 
 
                 <com.cengalabs.flatui.views.FlatButton
@@ -220,7 +223,9 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
                 android:layout_gravity="center_horizontal">
 
                 <TextView
@@ -229,8 +234,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Tag color :"
                     android:id="@+id/textView4"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginRight="230dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -238,14 +242,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal">
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="35dp"
                     android:layout_height="35dp"
 
                     android:id="@+id/grape"
                     flatui:fl_blockButtonEffectHeight="3dp"
-                    android:layout_marginLeft="50dp"
                     flatui:fl_theme="@array/grape"/>
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="35dp"
@@ -265,7 +269,6 @@
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-
                     android:id="@+id/green"
                     flatui:fl_blockButtonEffectHeight="3dp"
                     android:layout_marginLeft="5dp"
@@ -333,6 +336,7 @@
                 android:layout_marginTop="200dp">
 
             </LinearLayout>
+
         </LinearLayout>
 
 
