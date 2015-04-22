@@ -41,8 +41,12 @@ import com.squareup.picasso.Picasso;
 
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class firstpage extends ActionBarActivity {
@@ -51,10 +55,12 @@ public class firstpage extends ActionBarActivity {
     SQLiteDatabase mDb;
     Cursor mCursor;
     DynamicListView listFood;
-    static ArrayList<String> arr_list = new ArrayList<String>();
+    private Calendar calCurr;
+    static ArrayList<String> detail = new ArrayList<String>();
     static ArrayList<String> exp_date = new ArrayList<String>();
     static ArrayList<Integer> arr_list_id = new ArrayList<Integer>();
     static ArrayList<String> img_uri = new ArrayList<String>();
+    static ArrayList<String> day_till_Expire = new ArrayList<String>();
     ArrayAdapter<String> adapterDir;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +68,11 @@ public class firstpage extends ActionBarActivity {
         setContentView(R.layout.activity_firstpage);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
         manageDb();
-
+       // getTodayDate();
 
 
     }
+
 
     private void manageDb() {
         mHelper = new FoodDb(this);
@@ -74,33 +81,52 @@ public class firstpage extends ActionBarActivity {
         mCursor = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME2, null);
         mCursor.moveToFirst();
         clearArray();
+        Calendar toDayDate = Calendar.getInstance();
         while (!mCursor.isAfterLast()) {
             int id = mCursor.getInt(0);
             int imgID = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_P_id)));
-            String imgPath =  getImgPath(imgID);
-            arr_list.add("Detail : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
-            exp_date.add("Expire Date : " + mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Expire_date)));
-            //img_uri.add(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_P_id)));
+            String exp_Date = mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Expire_date));
+            String imgPath = getImgPath(imgID);
+            String DayLeft = getCountDownDate(exp_Date,toDayDate);
 
-            img_uri.add(imgPath);
-            arr_list_id.add(id);
+          //  String b = String.valueOf(daysLeft);
+          //  Toast.makeText(this, b ,Toast.LENGTH_LONG).show();
+                detail.add(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
+                exp_date.add("Expire Date : " + exp_Date);
+                //img_uri.add(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_P_id)));
+                img_uri.add(imgPath);
+                day_till_Expire.add(DayLeft);
+                arr_list_id.add(id);
+                mCursor.moveToNext();
 
-            mCursor.moveToNext();
+            }
 
+
+            listFood = (DynamicListView) findViewById(R.id.listFood);
+            adapterDir = new MyListAdapter(this, detail, exp_date, img_uri,day_till_Expire);
+            SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapterDir, this, new MyOnDismissCallback(adapterDir));
+            AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
+            animAdapter.setAbsListView(listFood);
+            assert animAdapter.getViewAnimator() != null;
+            animAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
+            listFood.setAdapter(animAdapter);
+            listFood.enableSimpleSwipeUndo();
         }
 
+    private String getCountDownDate(String exp_Date, Calendar toDayDate) {
+        SimpleDateFormat format1 = new SimpleDateFormat("MMMM dd,yyyy");
+        Calendar expDate = Calendar.getInstance();
+        try {
+            expDate.setTime(format1.parse(exp_Date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long diff = expDate.getTimeInMillis() - toDayDate.getTimeInMillis()+1;
+        String diffDays = String.valueOf((diff / (24 * 60 * 60 * 1000))+1);
 
-
-        listFood = (DynamicListView) findViewById(R.id.listFood);
-        adapterDir = new MyListAdapter(this,arr_list,exp_date,img_uri);
-        SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapterDir, this, new MyOnDismissCallback(adapterDir));
-        AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
-        animAdapter.setAbsListView(listFood);
-        assert animAdapter.getViewAnimator() != null;
-        animAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
-        listFood.setAdapter(animAdapter);
-        listFood.enableSimpleSwipeUndo();
+        return diffDays;
     }
+
 
     private String getImgPath(int imgID) {
         String picPath = null;
@@ -120,9 +146,10 @@ public class firstpage extends ActionBarActivity {
     }
 
     public void clearArray(){
-        arr_list.clear();
+        detail.clear();
         arr_list_id.clear();
         exp_date.clear();
+        day_till_Expire.clear();
         img_uri.clear();
 
 
@@ -181,19 +208,23 @@ public class firstpage extends ActionBarActivity {
 
     }
 
+
+
     private class MyListAdapter extends ArrayAdapter<String> implements UndoAdapter {
 
         private final Context mContext;
      ArrayList<String> Detail= new ArrayList<String>();
         ArrayList<String> imgUri= new ArrayList<String>();
         ArrayList<String> expDate= new ArrayList<String>();
-        MyListAdapter(final Context context, ArrayList<String> arr_list, ArrayList<String> exp_date, ArrayList<String> img_uri) {
+        ArrayList<String> daysLeft= new ArrayList<String>();
+        MyListAdapter(final Context context, ArrayList<String> detail, ArrayList<String> exp_date, ArrayList<String> img_uri, ArrayList<String> day_till_Expire) {
             mContext = context;
-            Detail = arr_list;
+            Detail = detail;
             expDate = exp_date;
             imgUri=img_uri;
-            for (int i = 0; i < firstpage.arr_list.size(); i++) {
-               add(firstpage.arr_list.get(i));
+            daysLeft = day_till_Expire;
+            for (int i = 0; i < firstpage.detail.size(); i++) {
+               add(firstpage.detail.get(i));
 
             }
 
@@ -218,11 +249,13 @@ public class firstpage extends ActionBarActivity {
             }
             TextView txtDetail = (TextView) view.findViewById(R.id.list_row_draganddrop_textview);
             TextView txtDate = (TextView) view.findViewById(R.id.expDate);
+            TextView txtDayLeft = (TextView) view.findViewById(R.id.daysLeft);
             ImageView imageView = (ImageView) view.findViewById(R.id.list_imgView);
 
             // txtPosition.setPadding(10, 0, 0, 0);
             txtDetail.setText(Detail.get(position));
             txtDate.setText(expDate.get(position));
+            txtDayLeft.setText(daysLeft.get(position));
             // set picasso
             int radius = 30;
             int stroke = 5;
@@ -300,7 +333,7 @@ public class firstpage extends ActionBarActivity {
                 + " WHERE " +FoodDb.COL_Item_id+ "='"+id+"';");
 
         mDb.close();
-        arr_list.remove(position);
+        detail.remove(position);
         arr_list_id.remove(position);
         exp_date.remove(position);
     }

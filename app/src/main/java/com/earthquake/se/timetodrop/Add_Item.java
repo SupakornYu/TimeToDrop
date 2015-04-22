@@ -38,6 +38,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -84,9 +85,11 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     private TextView mTextDate;
     private TextView ItemName;
     private  Uri imgUri;
-    private int before_expired_day;
+    private int notification_day = 1;
+   private String tagColor = "grey";
     FoodDb mHelper;
     SQLiteDatabase mDb;
+    Calendar toDayDate = Calendar.getInstance();
 
 
 
@@ -272,35 +275,35 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 mDatePicker.show(getSupportFragmentManager(), "datePicker");
             ////notification///////////////////////////
                 }else if(v.equals(one)){
-                before_expired_day = 1;
+                notification_day = 1;
                 one.getAttributes().setTheme(FlatUI.SNOW, getResources());
                 two.getAttributes().setTheme(FlatUI.SEA, getResources());
                 three.getAttributes().setTheme(FlatUI.SEA, getResources());
                 four.getAttributes().setTheme(FlatUI.SEA, getResources());
                 five.getAttributes().setTheme(FlatUI.SEA, getResources());
                 }else if(v.equals(two)){
-                before_expired_day = 2;
-                 one.getAttributes().setTheme(FlatUI.SEA, getResources());
+                notification_day = 2;
+                one.getAttributes().setTheme(FlatUI.SEA, getResources());
                 two.getAttributes().setTheme(FlatUI.SNOW, getResources());
                 three.getAttributes().setTheme(FlatUI.SEA, getResources());
                 four.getAttributes().setTheme(FlatUI.SEA, getResources());
                 five.getAttributes().setTheme(FlatUI.SEA, getResources());
                 }else if(v.equals(three)){
-                before_expired_day = 3;
+                notification_day = 3;
                 one.getAttributes().setTheme(FlatUI.SEA, getResources());
                 two.getAttributes().setTheme(FlatUI.SEA, getResources());
                 three.getAttributes().setTheme(FlatUI.SNOW, getResources());
                 four.getAttributes().setTheme(FlatUI.SEA, getResources());
                 five.getAttributes().setTheme(FlatUI.SEA, getResources());
                 }else if(v.equals(four)){
-                before_expired_day = 4;
+                notification_day = 4;
                 one.getAttributes().setTheme(FlatUI.SEA, getResources());
                 two.getAttributes().setTheme(FlatUI.SEA, getResources());
                 three.getAttributes().setTheme(FlatUI.SEA, getResources());
                 four.getAttributes().setTheme(FlatUI.SNOW, getResources());
                 five.getAttributes().setTheme(FlatUI.SEA, getResources());
                 }else if(v.equals(five)){
-                before_expired_day = 5;
+                notification_day = 5;
                 one.getAttributes().setTheme(FlatUI.SEA, getResources());
                 two.getAttributes().setTheme(FlatUI.SEA, getResources());
                 three.getAttributes().setTheme(FlatUI.SEA, getResources());
@@ -308,6 +311,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 five.getAttributes().setTheme(FlatUI.SNOW, getResources());
                 ////notification///////////////////////////////////
         }else if(v.equals(sky)){
+            tagColor = "sky";
             sky.getAttributes().setTheme(FlatUI.SNOW, getResources());
             red.getAttributes().setTheme(FlatUI.CANDY, getResources());
             orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
@@ -316,6 +320,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
             blue.getAttributes().setTheme(FlatUI.SEA, getResources());
         }else if(v.equals(red)){
+            tagColor = "red";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
             red.getAttributes().setTheme(FlatUI.SNOW, getResources());
             orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
@@ -324,6 +329,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
             blue.getAttributes().setTheme(FlatUI.SEA, getResources());
         }else if(v.equals(orange)){
+            tagColor = "orange";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
             red.getAttributes().setTheme(FlatUI.CANDY, getResources());
             orange.getAttributes().setTheme(FlatUI.SNOW, getResources());
@@ -332,6 +338,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
             blue.getAttributes().setTheme(FlatUI.SEA, getResources());
         }else if(v.equals(yellow)){
+            tagColor = "yellow";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
             red.getAttributes().setTheme(FlatUI.CANDY, getResources());
             orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
@@ -340,6 +347,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
             blue.getAttributes().setTheme(FlatUI.SEA, getResources());
         }else if(v.equals(green)){
+            tagColor = "green";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
             red.getAttributes().setTheme(FlatUI.CANDY, getResources());
             orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
@@ -348,6 +356,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
             blue.getAttributes().setTheme(FlatUI.SEA, getResources());
         }else if(v.equals(grape)){
+            tagColor = "grape";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
             red.getAttributes().setTheme(FlatUI.CANDY, getResources());
             orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
@@ -356,6 +365,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             grape.getAttributes().setTheme(FlatUI.SNOW, getResources());
             blue.getAttributes().setTheme(FlatUI.SEA, getResources());
         }else if(v.equals(blue)){
+            tagColor = "blue";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
             red.getAttributes().setTheme(FlatUI.CANDY, getResources());
             orange.getAttributes().setTheme(FlatUI.SNOW, getResources());
@@ -367,6 +377,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         }else if(v.equals(saveBtn)) {
                 String foodName = ItemName.getText().toString();
                 String expireDate = mTextDate.getText().toString();
+                int diffDay = getCountDownDate(expireDate,toDayDate);
                 if (foodName.length() == 0){
                     foodName = " ";
 
@@ -375,7 +386,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                     foodName = ItemName.getText().toString();
 
                 }
-                if(expireDate.length() != 0 && imgUri != null) {
+                if(expireDate.length() != 0 && imgUri != null && diffDay >= 0) {
                     mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME3 + " ("
                             + FoodDb.COL_Path + ") VALUES ('" + imgUri
                             + "');");
@@ -387,19 +398,25 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                     //if (mCursor.getCount() == 0) {
                         mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME2 + " ("
                             + FoodDb.COL_Item_Detail +","+FoodDb.COL_Expire_date+ ","+FoodDb.COL_P_id+","+FoodDb.COL_Warn_days+") VALUES ('" + foodName
-                            + "','"+expireDate+"','"+photoId+"','"+before_expired_day+"');");
+                            + "','"+expireDate+"','"+photoId+"','"+notification_day+"');");
 
 
                     //}
 
 
                     ItemName.setText("");
-                    Toast.makeText(getApplicationContext(), "Finish!!!   "+before_expired_day, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Finish!!!   "+notification_day, Toast.LENGTH_SHORT).show();
                     //Toast.makeText(getApplicationContext(), "Finish!!!", Toast.LENGTH_SHORT).show();
                     onBackPressed();
 
-                } else {
-                    Toast.makeText(getApplicationContext(),"Please Expire Date",Toast.LENGTH_SHORT).show();
+                } else if(expireDate.length() == 0){
+                    Toast.makeText(getApplicationContext(),"Please Input Expire Date",Toast.LENGTH_SHORT).show();
+
+                } else if(imgUri == null){
+                    Toast.makeText(getApplicationContext(),"Please Take a Photo",Toast.LENGTH_SHORT).show();
+
+                } else if(diffDay < 0){
+                    Toast.makeText(getApplicationContext(),"Please Intput Valid Expire Date",Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -471,6 +488,8 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
 
         }
     }
+
+
     private DatePickerDialog.OnDateSetListener onDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -480,8 +499,20 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                     mCalendar.set(year, month, day);
                     Date date = mCalendar.getTime();
                     String textDate = dateFormat.format(date);
-
                     mTextDate.setText(textDate);
                 }
             };
+    private int getCountDownDate(String exp_Date, Calendar toDayDate) {
+        SimpleDateFormat format1 = new SimpleDateFormat("MMMM dd,yyyy");
+        Calendar expDate = Calendar.getInstance();
+        try {
+            expDate.setTime(format1.parse(exp_Date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long diff = expDate.getTimeInMillis() - toDayDate.getTimeInMillis();
+        int diffDays = (int) (diff / (24 * 60 * 60 * 1000));
+
+        return diffDays;
+    }
 }
