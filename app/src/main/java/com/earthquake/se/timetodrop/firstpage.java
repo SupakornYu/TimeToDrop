@@ -37,6 +37,7 @@ import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCa
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.SimpleSwipeUndoAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.UndoAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
+import com.software.shell.fab.ActionButton;
 import com.squareup.picasso.Picasso;
 
 
@@ -54,6 +55,7 @@ public class firstpage extends ActionBarActivity {
     FoodDb mHelper;
     SQLiteDatabase mDb;
     Cursor mCursor;
+
     DynamicListView listFood;
     private Calendar calCurr;
     static ArrayList<String> detail = new ArrayList<String>();
@@ -62,13 +64,22 @@ public class firstpage extends ActionBarActivity {
     static ArrayList<String> img_uri = new ArrayList<String>();
     static ArrayList<String> day_till_Expire = new ArrayList<String>();
     ArrayAdapter<String> adapterDir;
+
+
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firstpage);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
         manageDb();
-       // getTodayDate();
+
+        ActionButton actionButton = (ActionButton) findViewById(R.id.action_button);
+        actionButton.show();    // shows the button if it is hidden and plays the show animation if set
+        actionButton.hide();    // hides the button if it is shown and plays the hide animation if set
+        actionButton.dismiss();
+        // To check whether button is shown (inherited from android.view.View class):
+
 
 
     }
@@ -207,6 +218,7 @@ public class firstpage extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
 
 
 
