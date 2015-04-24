@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -57,12 +59,15 @@ public class firstpage extends ActionBarActivity {
     Cursor mCursor;
 
     DynamicListView listFood;
+    private  ActionButton addButton;
     private Calendar calCurr;
     static ArrayList<String> detail = new ArrayList<String>();
     static ArrayList<String> exp_date = new ArrayList<String>();
     static ArrayList<Integer> arr_list_id = new ArrayList<Integer>();
     static ArrayList<String> img_uri = new ArrayList<String>();
     static ArrayList<String> day_till_Expire = new ArrayList<String>();
+    static ArrayList<String> color_Code = new ArrayList<String>();
+   // private TextView TagColor;
     ArrayAdapter<String> adapterDir;
 
 
@@ -73,13 +78,45 @@ public class firstpage extends ActionBarActivity {
         setContentView(R.layout.activity_firstpage);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
         manageDb();
+        buttonSetting();
+      //  TagColor = (TextView) findViewById(R.id.Tagcolor);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(firstpage.this, Add_Item.class);
+                startActivity(intent);
+            }
+        });
 
-        ActionButton actionButton = (ActionButton) findViewById(R.id.action_button);
-        actionButton.show();    // shows the button if it is hidden and plays the show animation if set
-        actionButton.hide();    // hides the button if it is shown and plays the hide animation if set
-        actionButton.dismiss();
-        // To check whether button is shown (inherited from android.view.View class):
 
+
+
+
+
+
+    }
+
+    private void buttonSetting() {
+        addButton = (ActionButton) findViewById(R.id.add_button);
+        //color
+        addButton.setButtonColor(getResources().getColor(R.color.fab_material_red_500));
+        int buttonColor = addButton.getButtonColor();
+        addButton.setButtonColorPressed(getResources().getColor(R.color.fab_material_red_900));
+        int buttonColorPressed = addButton.getButtonColorPressed();
+        boolean hasShadow = addButton.hasShadow();
+        //shadow
+        addButton.setShadowColor(getResources().getColor(R.color.fab_material_grey_500));
+        int shadowColor = addButton.getShadowColor();
+        addButton.setShadowRadius(5.0f);
+        float shadowRadius = addButton.getShadowRadius();
+        addButton.setShadowXOffset(3.5f);
+        float shadowXOffset = addButton.getShadowXOffset();
+        addButton.setShadowYOffset(3.0f);
+        float shadowYOffset = addButton.getShadowYOffset();
+        boolean hasImage = addButton.hasImage();
+        addButton.setImageResource(R.drawable.fab_plus_icon);
+        Drawable image = addButton.getImage();
+        float imageSize = addButton.getImageSize();
 
 
     }
@@ -98,23 +135,27 @@ public class firstpage extends ActionBarActivity {
             int imgID = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_P_id)));
             String exp_Date = mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Expire_date));
             String imgPath = getImgPath(imgID);
+            int tagID = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_G_id)));;
             String DayLeft = getCountDownDate(exp_Date,toDayDate);
-
+            String colorCode =  getColorCode(tagID);
+          //  TagColor.setBackgroundColor(Color.parseColor(colorCode));
+           // Toast.makeText(this, colorCode ,Toast.LENGTH_LONG).show();
           //  String b = String.valueOf(daysLeft);
           //  Toast.makeText(this, b ,Toast.LENGTH_LONG).show();
                 detail.add(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_Item_Detail)));
-                exp_date.add("Expire Date : " + exp_Date);
+                exp_date.add("Exp Date:" + exp_Date);
                 //img_uri.add(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_P_id)));
                 img_uri.add(imgPath);
                 day_till_Expire.add(DayLeft);
                 arr_list_id.add(id);
+                color_Code.add(colorCode);
                 mCursor.moveToNext();
 
             }
 
 
             listFood = (DynamicListView) findViewById(R.id.listFood);
-            adapterDir = new MyListAdapter(this, detail, exp_date, img_uri,day_till_Expire);
+            adapterDir = new MyListAdapter(this, detail, exp_date, img_uri,day_till_Expire,color_Code);
             SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapterDir, this, new MyOnDismissCallback(adapterDir));
             AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
             animAdapter.setAbsListView(listFood);
@@ -123,6 +164,21 @@ public class firstpage extends ActionBarActivity {
             listFood.setAdapter(animAdapter);
             listFood.enableSimpleSwipeUndo();
         }
+
+    private String getColorCode(int tagID) {
+        String colorCode;
+        Cursor mCursor3;
+        mHelper = new FoodDb(this);
+        mDb = mHelper.getReadableDatabase();
+        mDb = mHelper.getWritableDatabase();
+        //String MY_QUERY = "SELECT "+mHelper.COL_Path+ " FROM " + FoodDb.TABLE_NAME3 + "WHERE"+mHelper.COLP_Photo_tag_id+"LIKE"+imgID;
+        mCursor3 = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME1 +" WHERE "+mHelper.COL_Group_id+" LIKE '"+tagID+"'" , null);
+        mCursor3.moveToFirst();
+        colorCode = mCursor3.getString(2) ;
+        mCursor3.close();
+
+        return colorCode;
+    }
 
     private String getCountDownDate(String exp_Date, Calendar toDayDate) {
         SimpleDateFormat format1 = new SimpleDateFormat("MMMM dd,yyyy");
@@ -162,6 +218,7 @@ public class firstpage extends ActionBarActivity {
         exp_date.clear();
         day_till_Expire.clear();
         img_uri.clear();
+        color_Code.clear();
 
 
     }
@@ -229,12 +286,12 @@ public class firstpage extends ActionBarActivity {
         ArrayList<String> imgUri= new ArrayList<String>();
         ArrayList<String> expDate= new ArrayList<String>();
         ArrayList<String> daysLeft= new ArrayList<String>();
-        MyListAdapter(final Context context, ArrayList<String> detail, ArrayList<String> exp_date, ArrayList<String> img_uri, ArrayList<String> day_till_Expire) {
+        MyListAdapter(final Context context, ArrayList<String> detail, ArrayList<String> exp_date, ArrayList<String> img_uri, ArrayList<String> day_till_Expire, ArrayList<String> color_Code) {
             mContext = context;
-            Detail = detail;
+           /* Detail = detail;
             expDate = exp_date;
             imgUri=img_uri;
-            daysLeft = day_till_Expire;
+            daysLeft = day_till_Expire;*/
             for (int i = 0; i < firstpage.detail.size(); i++) {
                add(firstpage.detail.get(i));
 
@@ -262,12 +319,23 @@ public class firstpage extends ActionBarActivity {
             TextView txtDetail = (TextView) view.findViewById(R.id.list_row_draganddrop_textview);
             TextView txtDate = (TextView) view.findViewById(R.id.expDate);
             TextView txtDayLeft = (TextView) view.findViewById(R.id.daysLeft);
+            TextView tagColor = (TextView) view.findViewById(R.id.Tagcolor);
+
             ImageView imageView = (ImageView) view.findViewById(R.id.list_imgView);
 
             // txtPosition.setPadding(10, 0, 0, 0);
-            txtDetail.setText(Detail.get(position));
-            txtDate.setText(expDate.get(position));
-            txtDayLeft.setText(daysLeft.get(position));
+            txtDetail.setText(detail.get(position));
+            txtDate.setText(exp_date.get(position));
+            int dayLefts = Integer.parseInt(day_till_Expire.get(position));
+            String day = String.valueOf(dayLefts);
+            txtDayLeft.setText(day);
+            if (dayLefts < 3 ){
+                txtDayLeft.setTextColor(Color.parseColor("#ff1229"));
+            } else if (dayLefts < 6 ){
+                txtDayLeft.setTextColor(Color.parseColor("#ffd800"));
+            }
+            tagColor.setBackgroundColor(Color.parseColor(color_Code.get(position)));
+
             // set picasso
             int radius = 30;
             int stroke = 5;
@@ -275,7 +343,7 @@ public class firstpage extends ActionBarActivity {
             int width = 400;
             int height = 400;
            // String imageUri = "file:///storage/emulated/0/DCIM/TTD/IMG_20150417_170436.jpg";
-            Picasso.with(getApplicationContext()).load(imgUri.get(position)).resize(width, height)
+            Picasso.with(getApplicationContext()).load(img_uri.get(position)).resize(width, height)
                     // .transform(new RoundedRectTransformation(radius, stroke, margin))
 
                     .into(imageView);

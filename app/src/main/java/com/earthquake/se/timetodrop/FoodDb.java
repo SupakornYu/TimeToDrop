@@ -52,11 +52,14 @@ public class FoodDb extends SQLiteOpenHelper {
                     + COL_Position + " TEXT," + COL_Path + " TEXT );");
 
 
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('Red','#FF0000');");
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('Blue','#2E2EFE');");
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('Yellow','#F7FE2E');");
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('Green','#2EFE2E');");
-            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('Pink','#FE2EC8');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('sky','#13b7d2');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('orange','#ff7244');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('Green','#2cb081');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('grape','#695b8e');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('red','#FF0000');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('blue','#2f72da');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('yellow','#fabf57');");
+            db.execSQL("INSERT INTO " + TABLE_NAME1 + " (" + COL_Colour + ", "+ COL_Colour_code + ") VALUES ('grey','#e0e0e0');");
         }
 
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

@@ -1,18 +1,39 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.earthquake.se.timetodrop.firstpage"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:orientation="vertical">
 
  <!--   <ListView
         android:id="@+id/listFood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp" />-->
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <com.nhaarman.listviewanimations.itemmanipulation.DynamicListView
         android:id="@+id/listFood"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
-
+        android:layout_height="wrap_content">
+    </com.nhaarman.listviewanimations.itemmanipulation.DynamicListView>
 </LinearLayout>
+
+
+
+
+    <com.software.shell.fab.ActionButton
+        android:id="@+id/add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        />
+
+
+</RelativeLayout>

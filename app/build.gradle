@@ -30,4 +30,6 @@ dependencies {
     compile 'com.nhaarman.listviewanimations:lib-core-slh:3.1.0@aar'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.shell-software:fab:1.0.5'
+
 }

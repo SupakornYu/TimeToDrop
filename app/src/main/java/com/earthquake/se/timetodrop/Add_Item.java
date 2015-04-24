@@ -44,6 +44,7 @@ import java.util.Date;
 import java.util.List;
 import android.widget.ArrayAdapter;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.software.shell.fab.ActionButton;
 
 import org.w3c.dom.Text;
 
@@ -98,6 +99,8 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //flatUI
+
+
         FlatUI.initDefaultValues(this);
         FlatUI.setDefaultTheme(FlatUI.SEA);
         ActionBar actionBar = getSupportActionBar();
@@ -368,7 +371,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             tagColor = "blue";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
             red.getAttributes().setTheme(FlatUI.CANDY, getResources());
-            orange.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
             yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
             green.getAttributes().setTheme(FlatUI.GRASS, getResources());
             grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
@@ -377,6 +380,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         }else if(v.equals(saveBtn)) {
                 String foodName = ItemName.getText().toString();
                 String expireDate = mTextDate.getText().toString();
+                int TagId = getTagId(tagColor);
                 int diffDay = getCountDownDate(expireDate,toDayDate);
                 if (foodName.length() == 0){
                     foodName = " ";
@@ -397,15 +401,15 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                             , null);*/
                     //if (mCursor.getCount() == 0) {
                         mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME2 + " ("
-                            + FoodDb.COL_Item_Detail +","+FoodDb.COL_Expire_date+ ","+FoodDb.COL_P_id+","+FoodDb.COL_Warn_days+") VALUES ('" + foodName
-                            + "','"+expireDate+"','"+photoId+"','"+notification_day+"');");
+                            + FoodDb.COL_Item_Detail +","+FoodDb.COL_Expire_date+ ","+FoodDb.COL_P_id+","+FoodDb.COL_Warn_days+","+FoodDb.COL_G_id+") VALUES ('" + foodName
+                            + "','"+expireDate+"','"+photoId+"','"+notification_day+"','"+TagId+"');");
 
 
                     //}
 
 
                     ItemName.setText("");
-                    Toast.makeText(getApplicationContext(), "Finish!!!   "+notification_day, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Finish!!!   "+TagId +tagColor, Toast.LENGTH_SHORT).show();
                     //Toast.makeText(getApplicationContext(), "Finish!!!", Toast.LENGTH_SHORT).show();
                     onBackPressed();
 
@@ -514,5 +518,23 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         int diffDays = (int) (diff / (24 * 60 * 60 * 1000));
 
         return diffDays;
+    }
+
+    private int getTagId(String Color) {
+
+        Cursor mCursor4;
+        mHelper = new FoodDb(this);
+        mDb = mHelper.getReadableDatabase();
+        mDb = mHelper.getWritableDatabase();
+        //String MY_QUERY = "SELECT "+mHelper.COL_Path+ " FROM " + FoodDb.TABLE_NAME3 + "WHERE"+mHelper.COLP_Photo_tag_id+"LIKE"+imgID;
+        mCursor4 = mDb.rawQuery("SELECT * FROM " + FoodDb.TABLE_NAME1 +" WHERE "+mHelper.COL_Colour+" LIKE '"+Color+"'" , null);
+        mCursor4.moveToFirst();
+        String tagID = mCursor4.getString(0) ;
+        int t_id = Integer.parseInt(tagID);
+        mCursor4.close();
+
+        return t_id;
+
+
     }
 }

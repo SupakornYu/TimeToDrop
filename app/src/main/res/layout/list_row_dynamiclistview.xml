@@ -1,105 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2014 Niek Haarman
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
+<?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:andriod="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:ignore="UseCompoundDrawables">
+    android:layout_height="match_parent">
 
-    <com.nhaarman.listviewanimations.itemmanipulation.dragdrop.GripView
-        android:id="@+id/list_row_draganddrop_touchview"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:color="@android:color/darker_gray"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="4dp" />
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="170dp"
+        android:id="@+id/Tagcolor"
+
+
+        android:background="#e0e0e0"
+        android:layout_marginRight="5dp"/>
+
+
+
+
 
     <ImageView
-        android:id="@+id/list_imgView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:gravity="center_vertical"
-        android:minHeight="48dp"
-        tools:ignore="UnusedAttribute"
-    android:layout_weight="0.15"
-        android:scaleType="centerCrop"/>
+            android:id="@+id/list_imgView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:gravity="center_vertical"
+            android:minHeight="48dp"
+            tools:ignore="UnusedAttribute"
+            android:layout_weight="0.15"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/Tagcolor"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="10dp"
+            />
 
-   <!--<ImageView
-        android:id="@+id/list_imgView"
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center_vertical"
-        android:minHeight="48dp"
-        android:textColor="?android:attr/textColorSecondary"
-        android:textSize="20sp"
-        tools:ignore="UnusedAttribute"
-        android:layout_weight="0.15" />-->
+        android:text="expDate"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:id="@+id/expDate"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/list_imgView"/>
     <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Detail"
         android:id="@+id/list_row_draganddrop_textview"
-        android:layout_width="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/expDate"
+        android:layout_alignLeft="@+id/expDate"
+        android:layout_alignStart="@+id/expDate"/>
+    <TextView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center_vertical"
-        android:minHeight="48dp"
-        android:textColor="?android:attr/textColorSecondary"
-        android:textSize="20sp"
-        tools:ignore="UnusedAttribute"
-        android:layout_weight="0.15" />
-    <TextView
-        android:id="@+id/expDate"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center_vertical"
-        android:minHeight="48dp"
-        android:textColor="?android:attr/textColorSecondary"
-        android:textSize="20sp"
-        tools:ignore="UnusedAttribute"
-        android:layout_weight="0.15" />
-    <TextView
-        android:id="@+id/expDate"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center_vertical"
-        android:minHeight="48dp"
-        android:textColor="?android:attr/textColorSecondary"
-        android:textSize="20sp"
-        tools:ignore="UnusedAttribute"
-        android:layout_weight="0.15" />
-
-    <TextView
+        android:text="Dayleft"
         android:id="@+id/daysLeft"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center_vertical"
-        android:minHeight="48dp"
-        android:textColor="?android:attr/textColorSecondary"
-        android:textSize="20sp"
-        tools:ignore="UnusedAttribute"
-        android:layout_weight="0.15" />
+        android:textSize="80sp"
+        android:layout_marginRight="8dp"
+        android:textColor="#34d44e"
+        android:layout_alignTop="@+id/list_row_draganddrop_textview"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="150dp"
+        android:layout_above="@+id/expDate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="86dp"
+        android:layout_marginStart="86dp"
+        android:id="@+id/space" />
 
 
-
-
-
-</LinearLayout>
-
+</RelativeLayout>

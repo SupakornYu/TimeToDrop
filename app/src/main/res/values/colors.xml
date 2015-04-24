@@ -3,6 +3,7 @@
 <resources>
 
     <color name="bar_color">#3f51b5</color>
+    <color name="safeDays">#34d44e</color>
     <!--tag color
     <color name="sky"></color>
     <color name="grey"></color>

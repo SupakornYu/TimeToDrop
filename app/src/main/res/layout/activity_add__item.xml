@@ -15,6 +15,7 @@
         android:baselineAligned="true"
         android:weightSum="1">
 
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
@@ -65,32 +66,34 @@
                 android:layout_height="wrap_content"
                 android:background="#ffffffff"
                 android:clickable="false"
-                android:weightSum="1"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal">
 
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:weightSum="1">
 
 
                 <TextView
                     android:id="@+id/editText1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Item Name :"
-                    android:layout_marginRight="132dp" />
-
+                    android:text="Detail :"
+                    android:layout_marginRight="25dp" />
 
                 <com.cengalabs.flatui.views.FlatEditText
                     android:id="@+id/Item_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="121dp"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:hint="Input here"
-                    android:includeFontPadding="true"
+                    android:includeFontPadding="false"
                     flatui:fl_fieldStyle="box"
                     flatui:fl_theme="@array/sea"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:layout_weight="0.22"
+                    android:maxLength="100"/>
 
-             </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -162,6 +165,8 @@
 
 
 
+
+
                 <com.cengalabs.flatui.views.FlatButton
                 android:layout_width="55dp"
                 android:layout_height="55dp"
@@ -170,6 +175,7 @@
                 android:text="1"
                 flatui:fl_theme="@array/sea"
                 android:textSize="30dp" />
+
 
 
                 <com.cengalabs.flatui.views.FlatButton
@@ -319,6 +325,7 @@
                     app:cpb_textError="@string/error"
                     app:cpb_textIdle="@string/upload" />-->
 
+
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="100dp"
                     android:layout_height="35dp"
@@ -327,6 +334,8 @@
                     android:layout_marginLeft="5dp"
                     flatui:fl_theme="@array/orange"
                     android:text="Save" />
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -334,6 +343,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="200dp">
+
 
             </LinearLayout>
 
