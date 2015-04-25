@@ -394,7 +394,7 @@ public class firstpage extends ActionBarActivity {
             int id =  arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1, 2)));
             int posittion =Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1,2));
 
-            mToast = Toast.makeText(
+           mToast = Toast.makeText(
                     firstpage.this,
                     getString(R.string.removed_positions, arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1,2)))),
                     Toast.LENGTH_LONG
@@ -412,10 +412,19 @@ public class firstpage extends ActionBarActivity {
         mDb.execSQL("DELETE FROM " + FoodDb.TABLE_NAME2
                 + " WHERE " +FoodDb.COL_Item_id+ "='"+id+"';");
 
+       /* // Delete image from storage
+        String imgpath = img_uri.get(position);
+        Toast.makeText(this,imgpath,Toast.LENGTH_LONG).show();
+        File imgFile = new File(imgpath);
+        boolean deleted = imgFile.delete();
+*/
         mDb.close();
         detail.remove(position);
         arr_list_id.remove(position);
         exp_date.remove(position);
+        img_uri.remove(position);
+        day_till_Expire.remove(position);
+        color_Code.remove(position);
     }
 
 }
