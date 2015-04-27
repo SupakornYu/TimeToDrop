@@ -1,5 +1,6 @@
 package com.earthquake.se.timetodrop;
 
+import com.cengalabs.flatui.FlatUI;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import android.content.Context;
 import android.content.Intent;
@@ -77,6 +78,8 @@ public class firstpage extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firstpage);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setLogo(R.drawable.iconlogo);
         manageDb();
         buttonSetting();
       //  TagColor = (TextView) findViewById(R.id.Tagcolor);
@@ -87,6 +90,8 @@ public class firstpage extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+
 
 
 
@@ -189,8 +194,11 @@ public class firstpage extends ActionBarActivity {
             e.printStackTrace();
         }
         long diff = expDate.getTimeInMillis() - toDayDate.getTimeInMillis()+1;
-        String diffDays = String.valueOf((diff / (24 * 60 * 60 * 1000))+1);
-
+        int diff_day = (int) ((diff / (24 * 60 * 60 * 1000))+1);
+        if (diff_day < 0) {
+            diff_day = 0;
+        }
+        String diffDays = String.valueOf(diff_day);
         return diffDays;
     }
 
@@ -318,6 +326,7 @@ public class firstpage extends ActionBarActivity {
             }
             TextView txtDetail = (TextView) view.findViewById(R.id.list_row_draganddrop_textview);
             TextView txtDate = (TextView) view.findViewById(R.id.expDate);
+            TextView txtDay = (TextView) view.findViewById(R.id.daysLefttext);
             TextView txtDayLeft = (TextView) view.findViewById(R.id.daysLeft);
             TextView tagColor = (TextView) view.findViewById(R.id.Tagcolor);
 
@@ -330,11 +339,15 @@ public class firstpage extends ActionBarActivity {
             String day = String.valueOf(dayLefts);
             txtDayLeft.setText(day);
             if (dayLefts < 3 ){
+                txtDay.setTextColor(Color.parseColor("#ff1229"));
                 txtDayLeft.setTextColor(Color.parseColor("#ff1229"));
             } else if (dayLefts < 6 ){
+                txtDay.setTextColor(Color.parseColor("#ffd800"));
                 txtDayLeft.setTextColor(Color.parseColor("#ffd800"));
             }
             tagColor.setBackgroundColor(Color.parseColor(color_Code.get(position)));
+
+
 
             // set picasso
             int radius = 30;
@@ -343,7 +356,7 @@ public class firstpage extends ActionBarActivity {
             int width = 400;
             int height = 400;
            // String imageUri = "file:///storage/emulated/0/DCIM/TTD/IMG_20150417_170436.jpg";
-            Picasso.with(getApplicationContext()).load(img_uri.get(position)).resize(width, height)
+            Picasso.with(getApplicationContext()).load(img_uri.get(position)).resize(width, height).centerCrop()
                     // .transform(new RoundedRectTransformation(radius, stroke, margin))
 
                     .into(imageView);
