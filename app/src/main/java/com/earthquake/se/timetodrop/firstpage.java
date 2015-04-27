@@ -219,6 +219,11 @@ public class firstpage extends ActionBarActivity {
     private String getCountDownDate(String exp_Date, Calendar toDayDate) {
         SimpleDateFormat format1 = new SimpleDateFormat("MMMM dd,yyyy");
         Calendar expDate = Calendar.getInstance();
+        expDate.set(Calendar.HOUR_OF_DAY, 0);
+        expDate.set(Calendar.MINUTE, 0);
+        expDate.set(Calendar.SECOND, 0);
+        expDate.set(Calendar.MILLISECOND,0);
+
         try {
             expDate.setTime(format1.parse(exp_Date));
         } catch (ParseException e) {
@@ -226,7 +231,7 @@ public class firstpage extends ActionBarActivity {
         }
         long diff = expDate.getTimeInMillis() - toDayDate.getTimeInMillis()+1;
         int diff_day = (int) ((diff / (24 * 60 * 60 * 1000))+1);
-        if (diff_day < 0) {
+        if(diff<=0){
             diff_day = 0;
         }
         String diffDays = String.valueOf(diff_day);
