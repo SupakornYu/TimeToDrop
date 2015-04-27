@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.media.Image;
 import android.net.Uri;
@@ -66,8 +67,8 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     SurfaceHolder surfaceHolder;
     boolean saveState = false;
     private String timeStamp;
-    private static ImageButton photoBtn;
-    private static ImageButton RetakeBtn;
+    private ActionButton photoBtn;
+    private ActionButton RetakeBtn;
     private Button mDateButton;
     private Button saveBtn;
     private FlatButton one;
@@ -109,6 +110,8 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         mHelper = new FoodDb(this);
         mDb = mHelper.getWritableDatabase();
         initialWidget();
+        buttonSetting1();
+        buttonSetting2();
         surfaceHolder = mSurfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -163,13 +166,60 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
 
     }
 
+    private void buttonSetting1() {
+        photoBtn = (ActionButton) findViewById(R.id. photoBtn);
+        //color
+        photoBtn.setButtonColor(getResources().getColor(R.color.fab_material_red_500));
+        int buttonColor =  photoBtn.getButtonColor();
+        photoBtn.setButtonColorPressed(getResources().getColor(R.color.fab_material_red_900));
+        int buttonColorPressed =  photoBtn.getButtonColorPressed();
+        boolean hasShadow =  photoBtn.hasShadow();
+        //shadow
+        photoBtn.setShadowColor(getResources().getColor(R.color.fab_material_grey_500));
+        int shadowColor =  photoBtn.getShadowColor();
+        photoBtn.setShadowRadius(5.0f);
+        float shadowRadius =  photoBtn.getShadowRadius();
+        photoBtn.setShadowXOffset(3.5f);
+        float shadowXOffset =  photoBtn.getShadowXOffset();
+        photoBtn.setShadowYOffset(3.0f);
+        float shadowYOffset =  photoBtn.getShadowYOffset();
+        boolean hasImage =  photoBtn.hasImage();
+        photoBtn.setImageResource(R.drawable.ic_action_photo);
+        Drawable image =  photoBtn.getImage();
+        float imageSize =  photoBtn.getImageSize();
+    }
+
+    private void buttonSetting2() {
+        RetakeBtn = (ActionButton) findViewById(R.id.RePhotoBtn);
+        //color
+        RetakeBtn.setButtonColor(getResources().getColor(R.color.fab_material_red_500));
+        int buttonColor =  RetakeBtn.getButtonColor();
+        RetakeBtn.setButtonColorPressed(getResources().getColor(R.color.fab_material_red_900));
+        int buttonColorPressed = RetakeBtn.getButtonColorPressed();
+        boolean hasShadow =  RetakeBtn.hasShadow();
+        //shadow
+        RetakeBtn.setShadowColor(getResources().getColor(R.color.fab_material_grey_500));
+        int shadowColor =  RetakeBtn.getShadowColor();
+        RetakeBtn.setShadowRadius(5.0f);
+        float shadowRadius =  RetakeBtn.getShadowRadius();
+        RetakeBtn.setShadowXOffset(3.5f);
+        float shadowXOffset =  RetakeBtn.getShadowXOffset();
+        RetakeBtn.setShadowYOffset(3.0f);
+        float shadowYOffset =  RetakeBtn.getShadowYOffset();
+        boolean hasImage =  RetakeBtn.hasImage();
+        RetakeBtn.setImageResource(R.drawable.ic_action_refresh);
+        Drawable image =  RetakeBtn.getImage();
+        float imageSize =  RetakeBtn.getImageSize();
+    }
+
+
 
 
 
     private void initialWidget() {
         mSurfaceView = (SurfaceView) findViewById(R.id.cameraView);
-        photoBtn = (ImageButton) findViewById(R.id.photoBtn);
-        RetakeBtn = (ImageButton) findViewById(R.id.RePhotoBtn);
+        photoBtn = (ActionButton) findViewById(R.id.photoBtn);
+        RetakeBtn = (ActionButton) findViewById(R.id.RePhotoBtn);
         mDateButton = (Button) findViewById(R.id.button_date);
         mTextDate = (TextView) findViewById(R.id.text_Date);
         mCalendar = Calendar.getInstance();
@@ -429,8 +479,10 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
 
 
                     ItemName.setText("");
-                    Toast.makeText(getApplicationContext(), "Finish!!!   "+TagId +tagColor, Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(getApplicationContext(), "Finish!!!", Toast.LENGTH_SHORT).show();
+                    //
+                    //
+                    //Toast.makeText(getApplicationContext(), "Finish!!!   "+TagId +tagColor, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Add Successful", Toast.LENGTH_SHORT).show();
                     onBackPressed();
 
                 } else if(expireDate.length() == 0){
@@ -464,7 +516,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             os.write(data);
             os.flush();
             os.close();
-            Toast.makeText(getApplicationContext(), imgUri.getPath(), Toast.LENGTH_SHORT).show();
+          Toast.makeText(getApplicationContext(),"photo has been taken ", Toast.LENGTH_SHORT).show();
             photoBtn.setVisibility(View.INVISIBLE);
             RetakeBtn.setVisibility(View.VISIBLE);
         } catch (FileNotFoundException e) {

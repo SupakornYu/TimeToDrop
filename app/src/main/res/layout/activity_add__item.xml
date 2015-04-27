@@ -33,24 +33,23 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
-                <ImageButton
+                <com.software.shell.fab.ActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_action_photo"
                     android:id="@+id/photoBtn"
                     android:layout_gravity="center_horizontal"
-                    android:background="#ff56879c"
+
                     android:layout_marginTop="10dp"
                     android:clickable="false" />
 
 
-                <ImageButton
+                <com.software.shell.fab.ActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_action_refresh"
                     android:id="@+id/RePhotoBtn"
                     android:layout_gravity="center_horizontal|bottom"
-                    android:background="#ff56879c"
                     android:layout_marginTop="10dp"
                     android:scaleType="fitStart"
                     android:nestedScrollingEnabled="false"
@@ -338,7 +337,7 @@
                     android:id="@+id/saveBtn"
                     flatui:fl_blockButtonEffectHeight="3dp"
                     android:layout_marginLeft="5dp"
-                    flatui:fl_theme="@array/orange"
+                    flatui:fl_theme="@array/blood"
                     android:text="Save" />
 
 

@@ -1,6 +1,7 @@
 package com.earthquake.se.timetodrop;
 
 import com.cengalabs.flatui.FlatUI;
+import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import android.content.Context;
 import android.content.Intent;
@@ -193,7 +194,7 @@ public class firstpage extends ActionBarActivity {
             listFood = (DynamicListView) findViewById(R.id.listFood);
             adapterDir = new MyListAdapter(this, detail, exp_date, img_uri,day_till_Expire,color_Code);
             SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapterDir, this, new MyOnDismissCallback(adapterDir));
-            AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
+        SwingBottomInAnimationAdapter animAdapter = new SwingBottomInAnimationAdapter(simpleSwipeUndoAdapter);
             animAdapter.setAbsListView(listFood);
             assert animAdapter.getViewAnimator() != null;
             animAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
@@ -303,7 +304,7 @@ public class firstpage extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         // Handle presses on the action bar items
-        switch (item.getItemId()) {
+   /*     switch (item.getItemId()) {
             case R.id.action_new:
                 Intent i = new Intent(getApplicationContext(), setting_page.class);
                 startActivity(i);
@@ -314,7 +315,7 @@ public class firstpage extends ActionBarActivity {
 
 
 
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
 

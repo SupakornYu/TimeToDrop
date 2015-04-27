@@ -13,10 +13,10 @@
         app:showAsAction="never" />
 
 
-    <item android:id="@+id/action_new"
+    <!--<item android:id="@+id/action_new"
         android:icon="@drawable/help"
         app:showAsAction="always"
-        android:title="help" />
+        android:title="help" />-->
 
 
 
