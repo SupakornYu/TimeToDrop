@@ -16,4 +16,5 @@
     <string name="complete">Completed</string>
     <string name="error">Error!</string>
     <string name="upload">Upload</string>
+    <string name="title_activity_setting_page">setting_page</string>
 </resources>

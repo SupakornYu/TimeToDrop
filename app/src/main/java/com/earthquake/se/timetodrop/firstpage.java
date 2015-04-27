@@ -50,6 +50,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import android.app.PendingIntent;
+import android.app.AlarmManager;
+import com.earthquake.se.timetodrop.ExpireAlarmNotification.MyReceiver;
 
 
 public class firstpage extends ActionBarActivity {
@@ -70,6 +73,9 @@ public class firstpage extends ActionBarActivity {
    // private TextView TagColor;
     ArrayAdapter<String> adapterDir;
 
+    private PendingIntent pendingIntent;
+
+
 
     @Override
 
@@ -87,6 +93,8 @@ public class firstpage extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+        alarm_notification_service();
 
 
 
@@ -117,9 +125,32 @@ public class firstpage extends ActionBarActivity {
         addButton.setImageResource(R.drawable.fab_plus_icon);
         Drawable image = addButton.getImage();
         float imageSize = addButton.getImageSize();
-
-
     }
+
+    private void alarm_notification_service(){
+        //PendingIntent pendingIntent;
+        Calendar calendar = Calendar.getInstance();
+
+        //calendar.set(Calendar.MONTH, 4);
+        //calendar.set(Calendar.YEAR, 2015);
+        //calendar.set(Calendar.DAY_OF_MONTH, 24);
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 1);
+        //calendar.set(Calendar.SECOND, 0);
+
+        Intent myIntent = new Intent(firstpage.this, MyReceiver.class); //create myIntent
+        pendingIntent = PendingIntent.getBroadcast(firstpage.this, 0, myIntent,0);
+
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                1000 *15, pendingIntent);
+    }
+
+
+
 
 
     private void manageDb() {
@@ -261,7 +292,7 @@ public class firstpage extends ActionBarActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_new:
-                Intent i = new Intent(getApplicationContext(), Add_Item.class);
+                Intent i = new Intent(getApplicationContext(), setting_page.class);
                 startActivity(i);
                 //overridePendingTransition(R.animator.animation1,R.animator.animation2);
                 break;
@@ -417,5 +448,7 @@ public class firstpage extends ActionBarActivity {
         arr_list_id.remove(position);
         exp_date.remove(position);
     }
+
+
 
 }
