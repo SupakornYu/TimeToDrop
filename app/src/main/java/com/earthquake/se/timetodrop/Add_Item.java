@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.media.Image;
@@ -67,7 +68,6 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     private String timeStamp;
     private static ImageButton photoBtn;
     private static ImageButton RetakeBtn;
-
     private Button mDateButton;
     private Button saveBtn;
     private FlatButton one;
@@ -82,6 +82,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     private FlatButton yellow;
     private FlatButton orange;
     private FlatButton red;
+    private FlatButton grey;
     private Calendar mCalendar;
     private TextView mTextDate;
     private TextView ItemName;
@@ -99,12 +100,11 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //flatUI
-
-
         FlatUI.initDefaultValues(this);
         FlatUI.setDefaultTheme(FlatUI.SEA);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(FlatUI.getActionBarDrawable(this, FlatUI.BLOSSOM, false));
+       // actionBar.setIcon(R.drawable.ic_action_new);
         setContentView(R.layout.activity_add__item);
         mHelper = new FoodDb(this);
         mDb = mHelper.getWritableDatabase();
@@ -113,13 +113,15 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
-
+        grey.getBackground().setColorFilter(FlatUI.SNOW, PorterDuff.Mode.DARKEN);
+        one.getBackground().setColorFilter(FlatUI.SEA, PorterDuff.Mode.DARKEN);
         sky.setOnClickListener(this);
         red.setOnClickListener(this);
         yellow.setOnClickListener(this);
         blue.setOnClickListener(this);
         orange.setOnClickListener(this);
         grape.setOnClickListener(this);
+        grey.setOnClickListener(this);
         green.setOnClickListener(this);
         one.setOnClickListener(this);
         two.setOnClickListener(this);
@@ -182,6 +184,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         blue = (FlatButton) findViewById(R.id.blue);
         green = (FlatButton) findViewById(R.id.green);
         red = (FlatButton) findViewById(R.id.red);
+        grey = (FlatButton) findViewById(R.id.grey);
         grape = (FlatButton) findViewById(R.id.grape);
         orange = (FlatButton) findViewById(R.id.orange);
         yellow = (FlatButton) findViewById(R.id.yellow);
@@ -279,7 +282,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             ////notification///////////////////////////
                 }else if(v.equals(one)){
                 notification_day = 1;
-                one.getAttributes().setTheme(FlatUI.SNOW, getResources());
+                one.getBackground().setColorFilter(FlatUI.SEA, PorterDuff.Mode.DARKEN);
                 two.getAttributes().setTheme(FlatUI.SEA, getResources());
                 three.getAttributes().setTheme(FlatUI.SEA, getResources());
                 four.getAttributes().setTheme(FlatUI.SEA, getResources());
@@ -287,7 +290,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 }else if(v.equals(two)){
                 notification_day = 2;
                 one.getAttributes().setTheme(FlatUI.SEA, getResources());
-                two.getAttributes().setTheme(FlatUI.SNOW, getResources());
+                two.getBackground().setColorFilter(FlatUI.SEA, PorterDuff.Mode.DARKEN);
                 three.getAttributes().setTheme(FlatUI.SEA, getResources());
                 four.getAttributes().setTheme(FlatUI.SEA, getResources());
                 five.getAttributes().setTheme(FlatUI.SEA, getResources());
@@ -295,7 +298,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 notification_day = 3;
                 one.getAttributes().setTheme(FlatUI.SEA, getResources());
                 two.getAttributes().setTheme(FlatUI.SEA, getResources());
-                three.getAttributes().setTheme(FlatUI.SNOW, getResources());
+                three.getBackground().setColorFilter(FlatUI.SEA, PorterDuff.Mode.DARKEN);
                 four.getAttributes().setTheme(FlatUI.SEA, getResources());
                 five.getAttributes().setTheme(FlatUI.SEA, getResources());
                 }else if(v.equals(four)){
@@ -303,7 +306,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 one.getAttributes().setTheme(FlatUI.SEA, getResources());
                 two.getAttributes().setTheme(FlatUI.SEA, getResources());
                 three.getAttributes().setTheme(FlatUI.SEA, getResources());
-                four.getAttributes().setTheme(FlatUI.SNOW, getResources());
+                four.getBackground().setColorFilter(FlatUI.SEA, PorterDuff.Mode.DARKEN);
                 five.getAttributes().setTheme(FlatUI.SEA, getResources());
                 }else if(v.equals(five)){
                 notification_day = 5;
@@ -311,53 +314,58 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 two.getAttributes().setTheme(FlatUI.SEA, getResources());
                 three.getAttributes().setTheme(FlatUI.SEA, getResources());
                 four.getAttributes().setTheme(FlatUI.SEA, getResources());
-                five.getAttributes().setTheme(FlatUI.SNOW, getResources());
+                five.getBackground().setColorFilter(FlatUI.SEA, PorterDuff.Mode.DARKEN);
                 ////notification///////////////////////////////////
         }else if(v.equals(sky)){
             tagColor = "sky";
-            sky.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            sky.getBackground().setColorFilter(FlatUI.SKY, PorterDuff.Mode.DARKEN);
             red.getAttributes().setTheme(FlatUI.CANDY, getResources());
             orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
             yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
             green.getAttributes().setTheme(FlatUI.GRASS, getResources());
             grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
             blue.getAttributes().setTheme(FlatUI.SEA, getResources());
+            grey.getAttributes().setTheme(FlatUI.SNOW, getResources());
         }else if(v.equals(red)){
             tagColor = "red";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
-            red.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            red.getBackground().setColorFilter(FlatUI.CANDY, PorterDuff.Mode.DARKEN);
             orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
             yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
             green.getAttributes().setTheme(FlatUI.GRASS, getResources());
             grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
             blue.getAttributes().setTheme(FlatUI.SEA, getResources());
+            grey.getAttributes().setTheme(FlatUI.SNOW, getResources());
         }else if(v.equals(orange)){
             tagColor = "orange";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
             red.getAttributes().setTheme(FlatUI.CANDY, getResources());
-            orange.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            orange.getBackground().setColorFilter(FlatUI.ORANGE, PorterDuff.Mode.DARKEN);
             yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
             green.getAttributes().setTheme(FlatUI.GRASS, getResources());
             grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
             blue.getAttributes().setTheme(FlatUI.SEA, getResources());
+            grey.getAttributes().setTheme(FlatUI.SNOW, getResources());
         }else if(v.equals(yellow)){
             tagColor = "yellow";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
             red.getAttributes().setTheme(FlatUI.CANDY, getResources());
             orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
-            yellow.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            yellow.getBackground().setColorFilter(FlatUI.SAND, PorterDuff.Mode.DARKEN);
             green.getAttributes().setTheme(FlatUI.GRASS, getResources());
             grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
             blue.getAttributes().setTheme(FlatUI.SEA, getResources());
+            grey.getAttributes().setTheme(FlatUI.SNOW, getResources());
         }else if(v.equals(green)){
             tagColor = "green";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
             red.getAttributes().setTheme(FlatUI.CANDY, getResources());
             orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
             yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
-            green.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            green.getBackground().setColorFilter(FlatUI.GRASS, PorterDuff.Mode.DARKEN);
             grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
             blue.getAttributes().setTheme(FlatUI.SEA, getResources());
+            grey.getAttributes().setTheme(FlatUI.SNOW, getResources());
         }else if(v.equals(grape)){
             tagColor = "grape";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
@@ -365,9 +373,10 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
             yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
             green.getAttributes().setTheme(FlatUI.GRASS, getResources());
-            grape.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            grape.getBackground().setColorFilter(FlatUI.GRAPE, PorterDuff.Mode.DARKEN);
             blue.getAttributes().setTheme(FlatUI.SEA, getResources());
-        }else if(v.equals(blue)){
+            grey.getAttributes().setTheme(FlatUI.SNOW, getResources());
+        }else if(v.equals(blue)) {
             tagColor = "blue";
             sky.getAttributes().setTheme(FlatUI.SKY, getResources());
             red.getAttributes().setTheme(FlatUI.CANDY, getResources());
@@ -375,7 +384,18 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
             yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
             green.getAttributes().setTheme(FlatUI.GRASS, getResources());
             grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
-            blue.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            grey.getAttributes().setTheme(FlatUI.SNOW, getResources());
+            blue.getBackground().setColorFilter(FlatUI.SEA, PorterDuff.Mode.DARKEN);
+        }else if(v.equals(grey)){
+                tagColor = "grey";
+                sky.getAttributes().setTheme(FlatUI.SKY, getResources());
+                red.getAttributes().setTheme(FlatUI.CANDY, getResources());
+                orange.getAttributes().setTheme(FlatUI.ORANGE, getResources());
+                yellow.getAttributes().setTheme(FlatUI.SAND, getResources());
+                green.getAttributes().setTheme(FlatUI.GRASS, getResources());
+                grape.getAttributes().setTheme(FlatUI.GRAPE, getResources());
+                blue.getAttributes().setTheme(FlatUI.SEA, getResources());
+                grey.getBackground().setColorFilter(FlatUI.SNOW, PorterDuff.Mode.DARKEN);
 
         }else if(v.equals(saveBtn)) {
                 String foodName = ItemName.getText().toString();

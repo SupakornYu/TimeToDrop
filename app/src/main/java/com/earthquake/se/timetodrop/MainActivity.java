@@ -23,6 +23,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar_color)));
+        
         initialWidget();
         btn1.setOnClickListener(this);
         CreateButton.setOnClickListener(this);

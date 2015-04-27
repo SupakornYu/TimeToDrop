@@ -23,7 +23,7 @@
 
             <SurfaceView
                 android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_height="270dp"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/cameraView"
                 android:layout_marginTop="20dp" />
@@ -253,7 +253,13 @@
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-
+                    android:id="@+id/grey"
+                    flatui:fl_blockButtonEffectHeight="3dp"
+                    flatui:fl_theme="@array/snow"/>
+                <com.cengalabs.flatui.views.FlatButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="5dp"
                     android:id="@+id/grape"
                     flatui:fl_blockButtonEffectHeight="3dp"
                     flatui:fl_theme="@array/grape"/>
