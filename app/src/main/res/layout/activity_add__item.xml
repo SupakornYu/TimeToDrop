@@ -45,8 +45,8 @@
 
 
                 <com.software.shell.fab.ActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:src="@drawable/ic_action_refresh"
                     android:id="@+id/RePhotoBtn"
                     android:layout_gravity="center_horizontal|bottom"
@@ -170,7 +170,7 @@
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:id="@+id/one"
-                flatui:fl_blockButtonEffectHeight="3dp"
+                flatui:fl_blockButtonEffectHeight="8dp"
                 android:text="1"
                 flatui:fl_theme="@array/sea"
                 android:textSize="30dp" />
@@ -181,7 +181,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:id="@+id/two"
-                    flatui:fl_blockButtonEffectHeight="3dp"
+                    flatui:fl_blockButtonEffectHeight="8dp"
                     android:layout_marginLeft="5dp"
                     android:text="2"
                     flatui:fl_theme="@array/sea"
@@ -195,7 +195,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:id="@+id/three"
-                    flatui:fl_blockButtonEffectHeight="3dp"
+                    flatui:fl_blockButtonEffectHeight="8dp"
                     android:layout_marginLeft="5dp"
                     android:text="3"
                     flatui:fl_theme="@array/sea"
@@ -205,7 +205,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:id="@+id/four"
-                    flatui:fl_blockButtonEffectHeight="3dp"
+                    flatui:fl_blockButtonEffectHeight="8dp"
                     android:layout_marginLeft="5dp"
                     android:text="4"
                     flatui:fl_theme="@array/sea"
@@ -217,7 +217,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:id="@+id/five"
-                    flatui:fl_blockButtonEffectHeight="3dp"
+                    flatui:fl_blockButtonEffectHeight="8dp"
                     android:layout_marginLeft="5dp"
                     android:text="5"
                     flatui:fl_theme="@array/sea"
@@ -253,35 +253,36 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:id="@+id/grey"
-                    flatui:fl_blockButtonEffectHeight="3dp"
+                    flatui:fl_blockButtonEffectHeight="8dp"
                     flatui:fl_theme="@array/snow"/>
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginLeft="5dp"
                     android:id="@+id/grape"
-                    flatui:fl_blockButtonEffectHeight="3dp"
+                    flatui:fl_blockButtonEffectHeight="8dp"
                     flatui:fl_theme="@array/grape"/>
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-
+                    flatui:fl_blockButtonEffectHeight="8dp"
                     android:id="@+id/sky"
-                    flatui:fl_blockButtonEffectHeight="3dp"
+
                     android:layout_marginLeft="5dp"
                     flatui:fl_theme="@array/sky"/>
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:id="@+id/blue"
-                    flatui:fl_blockButtonEffectHeight="3dp"
+
+                    flatui:fl_blockButtonEffectHeight="8dp"
                     android:layout_marginLeft="5dp"
                     flatui:fl_theme="@array/sea"/>
                 <com.cengalabs.flatui.views.FlatButton
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:id="@+id/green"
-                    flatui:fl_blockButtonEffectHeight="3dp"
+                    flatui:fl_blockButtonEffectHeight="8dp"
                     android:layout_marginLeft="5dp"
                     flatui:fl_theme="@array/grass"/>
                 <com.cengalabs.flatui.views.FlatButton
@@ -289,7 +290,7 @@
                     android:layout_height="35dp"
 
                     android:id="@+id/yellow"
-                    flatui:fl_blockButtonEffectHeight="3dp"
+                    flatui:fl_blockButtonEffectHeight="8dp"
                     android:layout_marginLeft="5dp"
                     flatui:fl_theme="@array/sand"/>
                 <com.cengalabs.flatui.views.FlatButton
@@ -297,7 +298,7 @@
                     android:layout_height="35dp"
 
                     android:id="@+id/orange"
-                    flatui:fl_blockButtonEffectHeight="3dp"
+                    flatui:fl_blockButtonEffectHeight="8dp"
                     android:layout_marginLeft="5dp"
                     flatui:fl_theme="@array/orange"/>
                 <com.cengalabs.flatui.views.FlatButton
@@ -305,7 +306,7 @@
                     android:layout_height="35dp"
 
                     android:id="@+id/red"
-                    flatui:fl_blockButtonEffectHeight="3dp"
+                    flatui:fl_blockButtonEffectHeight="8dp"
                     android:layout_marginLeft="5dp"
                     flatui:fl_theme="@array/candy"/>
 

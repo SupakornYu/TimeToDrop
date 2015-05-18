@@ -110,8 +110,6 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         mHelper = new FoodDb(this);
         mDb = mHelper.getWritableDatabase();
         initialWidget();
-        buttonSetting1();
-        buttonSetting2();
         surfaceHolder = mSurfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -460,7 +458,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                     foodName = ItemName.getText().toString();
 
                 }
-                if(expireDate.length() != 0 && imgUri != null && diffDay >= 0) {
+                if(expireDate.length() != 0 && imgUri != null && diffDay > 0) {
                     mDb.execSQL("INSERT INTO " + FoodDb.TABLE_NAME3 + " ("
                             + FoodDb.COL_Path + ") VALUES ('" + imgUri
                             + "');");
@@ -491,7 +489,7 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
                 } else if(imgUri == null){
                     Toast.makeText(getApplicationContext(),"Please Take a Photo",Toast.LENGTH_SHORT).show();
 
-                } else if(diffDay < 0){
+                } else if(diffDay <= 0){
                     Toast.makeText(getApplicationContext(),"Please Intput Valid Expire Date",Toast.LENGTH_SHORT).show();
 
                 }
@@ -581,15 +579,23 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
     private int getCountDownDate(String exp_Date, Calendar toDayDate) {
         SimpleDateFormat format1 = new SimpleDateFormat("MMMM dd,yyyy");
         Calendar expDate = Calendar.getInstance();
+        expDate.set(Calendar.HOUR_OF_DAY, 0);
+        expDate.set(Calendar.MINUTE, 0);
+        expDate.set(Calendar.SECOND, 0);
+        expDate.set(Calendar.MILLISECOND,0);
+
         try {
             expDate.setTime(format1.parse(exp_Date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        long diff = expDate.getTimeInMillis() - toDayDate.getTimeInMillis();
-        int diffDays = (int) (diff / (24 * 60 * 60 * 1000));
+        long diff = expDate.getTimeInMillis() - toDayDate.getTimeInMillis()+1;
+        int diff_day = (int) ((diff / (24 * 60 * 60 * 1000))+1);
+        if(diff<=0){
+            diff_day = 0;
+        }
 
-        return diffDays;
+        return diff_day;
     }
 
     private int getTagId(String Color) {

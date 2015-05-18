@@ -72,6 +72,7 @@ public class firstpage extends ActionBarActivity {
     static ArrayList<String> img_uri = new ArrayList<String>();
     static ArrayList<String> day_till_Expire = new ArrayList<String>();
     static ArrayList<String> color_Code = new ArrayList<String>();
+    static ArrayList<String> day_color = new ArrayList<String>();
    // private TextView TagColor;
     ArrayAdapter<String> adapterDir;
 
@@ -174,6 +175,16 @@ public class firstpage extends ActionBarActivity {
             String imgPath = getImgPath(imgID);
             int tagID = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(mHelper.COL_G_id)));;
             String DayLeft = getCountDownDate(exp_Date,toDayDate);
+            int dayLefts = Integer.parseInt(DayLeft);
+            if (dayLefts < 3 ){
+                day_color.add("#ff1229");
+               ;
+            } else if (dayLefts < 6 ){
+               day_color.add("#ffd800");
+            }
+            else {
+                day_color.add("#34d44e");
+            }
             String colorCode =  getColorCode(tagID);
           //  TagColor.setBackgroundColor(Color.parseColor(colorCode));
            // Toast.makeText(this, colorCode ,Toast.LENGTH_LONG).show();
@@ -192,7 +203,7 @@ public class firstpage extends ActionBarActivity {
 
 
             listFood = (DynamicListView) findViewById(R.id.listFood);
-            adapterDir = new MyListAdapter(this, detail, exp_date, img_uri,day_till_Expire,color_Code);
+            adapterDir = new MyListAdapter(this, detail, exp_date, img_uri,day_till_Expire,color_Code,day_color);
             SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapterDir, this, new MyOnDismissCallback(adapterDir));
         SwingBottomInAnimationAdapter animAdapter = new SwingBottomInAnimationAdapter(simpleSwipeUndoAdapter);
             animAdapter.setAbsListView(listFood);
@@ -264,6 +275,7 @@ public class firstpage extends ActionBarActivity {
         day_till_Expire.clear();
         img_uri.clear();
         color_Code.clear();
+        day_color.clear();
 
 
     }
@@ -331,7 +343,7 @@ public class firstpage extends ActionBarActivity {
         ArrayList<String> imgUri= new ArrayList<String>();
         ArrayList<String> expDate= new ArrayList<String>();
         ArrayList<String> daysLeft= new ArrayList<String>();
-        MyListAdapter(final Context context, ArrayList<String> detail, ArrayList<String> exp_date, ArrayList<String> img_uri, ArrayList<String> day_till_Expire, ArrayList<String> color_Code) {
+        MyListAdapter(final Context context, ArrayList<String> detail, ArrayList<String> exp_date, ArrayList<String> img_uri, ArrayList<String> day_till_Expire, ArrayList<String> color_Code, ArrayList<String> day_color) {
             mContext = context;
            /* Detail = detail;
             expDate = exp_date;
@@ -372,16 +384,19 @@ public class firstpage extends ActionBarActivity {
             // txtPosition.setPadding(10, 0, 0, 0);
             txtDetail.setText(detail.get(position));
             txtDate.setText(exp_date.get(position));
-            int dayLefts = Integer.parseInt(day_till_Expire.get(position));
-            String day = String.valueOf(dayLefts);
-            txtDayLeft.setText(day);
+          int dayLefts = Integer.parseInt(day_till_Expire.get(position));
+           String day = String.valueOf(dayLefts);
+           txtDayLeft.setText(day);
+            /*
             if (dayLefts < 3 ){
                 txtDay.setTextColor(Color.parseColor("#ff1229"));
                 txtDayLeft.setTextColor(Color.parseColor("#ff1229"));
             } else if (dayLefts < 6 ){
                 txtDay.setTextColor(Color.parseColor("#ffd800"));
-                txtDayLeft.setTextColor(Color.parseColor("#ffd800"));
-            }
+            txtDayLeft.setTextColor(Color.parseColor("#ffd800"));
+        }*/
+            txtDay.setTextColor(Color.parseColor(day_color.get(position)));
+            txtDayLeft.setTextColor(Color.parseColor(day_color.get(position)));
             tagColor.setBackgroundColor(Color.parseColor(color_Code.get(position)));
 
 
@@ -446,8 +461,10 @@ public class firstpage extends ActionBarActivity {
 
            mToast = Toast.makeText(
                     firstpage.this,
-                    getString(R.string.removed_positions, arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1,2)))),
-                    Toast.LENGTH_LONG
+                  //  getString(R.string.removed_positions, arr_list_id.get(Integer.parseInt(Arrays.toString(reverseSortedPositions).substring(1,2)))),
+
+                   "Deleted Completed",
+                   Toast.LENGTH_LONG
             );
             mToast.show();
             deleteRow(id,posittion);
@@ -475,6 +492,7 @@ public class firstpage extends ActionBarActivity {
         img_uri.remove(position);
         day_till_Expire.remove(position);
         color_Code.remove(position);
+        day_color.remove(position);
     }
 
 
