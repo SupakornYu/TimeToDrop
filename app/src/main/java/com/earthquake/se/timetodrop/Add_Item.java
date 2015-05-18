@@ -110,6 +110,8 @@ public class Add_Item extends ActionBarActivity implements View.OnClickListener,
         mHelper = new FoodDb(this);
         mDb = mHelper.getWritableDatabase();
         initialWidget();
+        buttonSetting1();
+        buttonSetting2();
         surfaceHolder = mSurfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
